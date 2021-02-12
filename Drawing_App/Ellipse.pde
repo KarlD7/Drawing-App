@@ -19,8 +19,6 @@ class Ellipse extends Rectangle{
         ellipse(super.startX,super.startY,(mouseX-super.startX)*2,(mouseY-super.startY)*2);
         super.endX = mouseX;
         super.endY = mouseY;
-        println(super.endX);
-        println(super.endY);
       }
     }
     if(!super.start && !mousePressed){
