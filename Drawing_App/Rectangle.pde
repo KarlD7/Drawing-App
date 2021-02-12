@@ -33,8 +33,6 @@ class Rectangle{
         rect(startX,startY,mouseX-startX,mouseY-startY);
         endX = mouseX;
         endY = mouseY;
-        println(endX);
-        println(endY);
       }
     }
     if(!start && !mousePressed){
