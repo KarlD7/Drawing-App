@@ -26,6 +26,7 @@ void setup(){
  
 }
 
+//This is just how I am manually testing commands
 void keyPressed(){
  if(key == CODED){
    if(keyCode == CONTROL){
