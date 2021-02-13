@@ -3,23 +3,31 @@ class Pencil{
 
   public Pencil(){
     try{
-      drawncanvas = loadImage("drawncanvas.tif");
-      background(drawncanvas);
+      drawnCanvas = loadImage("drawnCanvas.tif");
+      background(drawnCanvas);
     }
     catch(Exception e){
-    saveFrame("drawncanvas");
-    drawncanvas = loadImage("drawncanvas.tif");
-    background(drawncanvas);
+      saveFrame("drawnCanvas");
+      drawnCanvas = loadImage("drawnCanvas.tif");
+      background(drawnCanvas);
     }
   }
   
   public void paint(){
+    if(start){
+      if(mousePressed){
+        saveFrame("undoCanvas");
+        start = false;
+      }
+    }
     if(mousePressed){
+      drawnCanvas = loadImage("drawnCanvas.tif");
+      background(drawnCanvas);
       line(mouseX, mouseY, pmouseX, pmouseY);
-      start = false;
+      saveFrame("drawnCanvas");
     }
     if(!start && !mousePressed){
-      saveFrame("drawncanvas");
+      saveFrame("drawnCanvas");
       start = true;
     }
   }

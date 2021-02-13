@@ -1,4 +1,4 @@
-class Ellipse extends Rectangle{
+class Ellipse extends Shape{
   
   public Ellipse(){
     super();
@@ -6,25 +6,40 @@ class Ellipse extends Rectangle{
   
   public void paint(){
     noFill();
-    if(super.start == true){
+    if(start){
       if(mousePressed){
-        super.startX = mouseX;
-        super.startY = mouseY;
-        super.start = false;
+        saveFrame("undoCanvas");
+        startX = mouseX;
+        startY = mouseY;
+        start = false;
       }
     }
     if(mousePressed){
-      if(super.drawing){
-        background(drawncanvas);
-        ellipse(super.startX,super.startY,(mouseX-super.startX)*2,(mouseY-super.startY)*2);
-        super.endX = mouseX;
-        super.endY = mouseY;
-      }
+        drawnCanvas = loadImage("drawnCanvas.tif");
+        background(drawnCanvas);
+        ellipse(startX,startY,(mouseX-startX)*2,(mouseY-startY)*2);
+        endX = mouseX;
+        endY = mouseY;
     }
-    if(!super.start && !mousePressed){
-      saveFrame("drawncanvas");
-      super.drawing = false;
-      super.start = true;
+    if(!start && !mousePressed){
+      start = true;
+      saveFrame("drawnCanvas");
+    }
+  }
+  
+  /**
+  * x, y: Center coordinates of shape
+  * wd, ht: Width and height, respectively
+  */
+  public void paintNumerically(int x, int y, int wd, int ht){
+    if(drawing){
+      saveFrame("undoCanvas");
+      drawnCanvas = loadImage("drawnCanvas.tif");
+      background(drawnCanvas);
+      noFill();
+      ellipse(x,y,wd,ht);
+      saveFrame("drawnCanvas");
+      drawing = false;
     }
   }
 }
