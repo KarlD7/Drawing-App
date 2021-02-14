@@ -144,7 +144,7 @@ class ControlFrameMenu extends PApplet {
    if(au.isPressed()){
     if(!openedWindow){
       println("Opening Advanced window...");
-      af = new ControlFrameAdult(this,300,700,"Advanced Drawing Window",font);
+      af = new ControlFrameAdult(parent,300,700,"Advanced Drawing Window",font);
       openedWindow = true;
     }
     else {
@@ -154,7 +154,7 @@ class ControlFrameMenu extends PApplet {
   if(su.isPressed()){
     if(!openedWindow){
       println("hello");
-      kf = new ControlFrameKid(this,300,700,"Standard Drawing Window");
+      kf = new ControlFrameKid(parent,300,700,"Standard Drawing Window",font);
       openedWindow = true;
       return;
     }
@@ -171,13 +171,25 @@ class ControlFrameKid extends PApplet {
   String name;
   PApplet parent;
   ControlP5 cp5;
+  PFont font;
+  
+  Button paintButton;
+  Button rectButton;
+  Button elliButton;
+  
+  Button undoButton;
+  Button redoButton;
+  Button ex;
+  Button sv;
+  Button imp;
 
-  public ControlFrameKid(PApplet parentApplet, int wval, int hval, String nameOf) {
+  public ControlFrameKid(PApplet parentApplet, int wval, int hval, String nameOf,PFont fonts) {
     super();   
     parent = parentApplet;
     w=wval;
     h=hval;
     name = nameOf;
+    font = fonts;
     PApplet.runSketch(new String[]{this.getClass().getName()}, this);
   }
 
@@ -192,13 +204,74 @@ class ControlFrameKid extends PApplet {
   highlight2 = #002D5A;
   background(main);
   surface.setTitle(name);
-  font = "DejaVuSans.ttf";
   cp5 = new ControlP5(this);
   surface.setLocation(10,10);
+  
+  cp5.addButton("Brush")
+  .setFont(font)
+  .setSize(100,30)
+  .setPosition(10,20);
+  paintButton = cp5.get(Button.class,"Brush");
+  
+  cp5.addButton("Rectangle")
+  .setFont(font)
+  .setSize(150,30)
+  .setPosition(10,60);
+  rectButton = cp5.get(Button.class,"Rectangle");
+  
+  cp5.addButton("Ellipse")
+  .setFont(font)
+  .setSize(120,30)
+  .setPosition(10,100);
+  elliButton = cp5.get(Button.class,"Ellipse");
+  
+  /* Button template
+  cp5.addButton("[name]")
+    .setFont(font)
+    .setSize(100,30)
+    .plugToParent(parent,[name]);
+    .setPosition(10,[]);
+  [abrv] = cp5.get(Button.class,"[name]");
+  */
+  
+  cp5.addButton("Undo")
+  .setFont(font)
+  .setSize(100,30)
+  .setPosition(10,550);
+  undoButton = cp5.get(Button.class,"Undo");
+  
+  cp5.addButton("Redo")
+  .setFont(font)
+  .setSize(100,30)
+  .setPosition(180,550);
+  redoButton = cp5.get(Button.class,"Redo");
+  
+  cp5.addButton("Import")
+   .setFont(font)
+   .setSize(100,30)
+   .setPosition(180,590);
+  imp = cp5.get(Button.class,"Import");
+  
+  cp5.addButton("Save")
+    .setFont(font)
+    .setSize(100,30)
+    .setPosition(10,590);
+  sv = cp5.get(Button.class,"Save");
+  
+  cp5.addButton("Exit")
+  .setFont(font)
+  .setSize(200,30)
+  .setPosition((w/2)-100,h-60);
+  ex = cp5.get(Button.class,"Exit");
   
   }
   
   public void draw(){
+    
+    if(ex.isPressed()){
+      exit();
+    }
+    
   }
 }
 
@@ -210,7 +283,15 @@ class ControlFrameAdult extends PApplet {
   ControlP5 cp5;
   PFont font;
   
+  Button paintButton;
+  Button rectButton;
+  Button elliButton;
+  
+  Button undoButton;
+  Button redoButton;
+  Button ex;
   Button sv;
+  Button imp;
 
   public ControlFrameAdult(PApplet parentApplet, int wval, int hval, String nameOf,PFont fonts) {
     super();   
@@ -235,18 +316,59 @@ class ControlFrameAdult extends PApplet {
   cp5 = new ControlP5(this);
   surface.setLocation(10,10);
   
-  cp5.addButton("Save")
+  cp5.addButton("Brush")
   .setFont(font)
-  .setSize(100,20)
-  .setPosition(0,0);
+  .setSize(100,30)
+  .setPosition(10,20);
+  paintButton = cp5.get(Button.class,"Brush");
   
+  cp5.addButton("Rectangle")
+  .setFont(font)
+  .setSize(150,30)
+  .setPosition(10,60);
+  rectButton = cp5.get(Button.class,"Rectangle");
+  
+  cp5.addButton("Ellipse")
+  .setFont(font)
+  .setSize(120,30)
+  .setPosition(10,100);
+  elliButton = cp5.get(Button.class,"Ellipse");
+  
+  cp5.addButton("Undo")
+  .setFont(font)
+  .setSize(100,30)
+  .setPosition(10,550);
+  undoButton = cp5.get(Button.class,"Undo");
+  
+  cp5.addButton("Redo")
+  .setFont(font)
+  .setSize(100,30)
+  .setPosition(180,550);
+  redoButton = cp5.get(Button.class,"Redo");
+  
+  cp5.addButton("Import")
+   .setFont(font)
+   .setSize(100,30)
+   .setPosition(180,590);
+  imp = cp5.get(Button.class,"Import");
+  
+  cp5.addButton("Save")
+    .setFont(font)
+    .setSize(100,30)
+    .setPosition(10,590);
   sv = cp5.get(Button.class,"Save");
+  
+  cp5.addButton("Exit")
+  .setFont(font)
+  .setSize(200,30)
+  .setPosition((w/2)-100,h-60);
+  ex = cp5.get(Button.class,"Exit");
   }
   
   
   
   public void draw(){
-    if(sv.isPressed()){
+    if(ex.isPressed()){
       exit();
     }
   }
