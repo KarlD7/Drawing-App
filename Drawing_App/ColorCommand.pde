@@ -1,10 +1,10 @@
 public class ColorCommand implements Command{
  
-  int[] newColor = new int[]{0,0,0};
+  private int[] newColor = new int[]{0,0,0};
   
-  int[] prevColor = new int[3];
+  private int[] prevColor = new int[3];
   
-  int weight;
+  private int weight;
   
   public ColorCommand(int[] rgb){
     this.prevColor = newColor;
@@ -20,4 +20,5 @@ public class ColorCommand implements Command{
   public void undo(){
     stroke(prevColor[0], prevColor[1], prevColor[2]);
   }
+
 }

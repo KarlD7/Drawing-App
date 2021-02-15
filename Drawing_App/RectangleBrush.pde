@@ -1,6 +1,12 @@
-class Ellipse extends Shape{
+class RectangleBrush extends ShapeBrush{
+ /* private int startX;
+  private int startY;
+  private int endX;
+  private int endY;
+  private boolean start = true;
+  private boolean drawing = true;*/
   
-  public Ellipse(){
+  public RectangleBrush(){
     super();
   }
   
@@ -17,13 +23,18 @@ class Ellipse extends Shape{
     if(mousePressed){
         drawnCanvas = loadImage("drawnCanvas.tif");
         background(drawnCanvas);
-        ellipse(startX,startY,(mouseX-startX)*2,(mouseY-startY)*2);
         endX = mouseX;
         endY = mouseY;
+        rect(startX,startY,endX-startX,endY-startY);
     }
     if(!start && !mousePressed){
-      start = true;
+      int wd = endX - startX;
+      int ht = endY - startY;
+      Shape r = new Shape(startX+wd/2, startY+ht/2, wd, ht, "rectangle");
+      shapes.addShape(r);
       saveFrame("drawnCanvas");
+      start = true;
+      lastAction = "draw";
     }
   }
   
@@ -33,13 +44,17 @@ class Ellipse extends Shape{
   */
   public void paintNumerically(int x, int y, int wd, int ht){
     if(drawing){
+      rectMode(CENTER); //Changes first two parameters to center coordinates
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       noFill();
-      ellipse(x,y,wd,ht);
-      saveFrame("drawnCanvas");
+      rect(x, y, wd, ht);
+      Shape r = new Shape(x, y, wd, ht, "rectangle");
+      shapes.addShape(r);
       drawing = false;
+      rectMode(CORNER); //Back to default (Manually drawing uses this mode)
+      lastAction = "draw";
     }
   }
 }

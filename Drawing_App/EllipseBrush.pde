@@ -1,12 +1,6 @@
-class Rectangle extends Shape{
- /* private int startX;
-  private int startY;
-  private int endX;
-  private int endY;
-  private boolean start = true;
-  private boolean drawing = true;*/
+class EllipseBrush extends ShapeBrush{
   
-  public Rectangle(){
+  public EllipseBrush(){
     super();
   }
   
@@ -23,13 +17,18 @@ class Rectangle extends Shape{
     if(mousePressed){
         drawnCanvas = loadImage("drawnCanvas.tif");
         background(drawnCanvas);
-        rect(startX,startY,mouseX-startX,mouseY-startY);
         endX = mouseX;
         endY = mouseY;
+        ellipse(startX,startY,(endX-startX)*2,(endY-startY)*2);
     }
     if(!start && !mousePressed){
+      int wd = (endX-startX)*2;
+      int ht = (endY-startY)*2;
+      Shape e = new Shape(startX, startY, wd, ht, "ellipse");
+      shapes.addShape(e);
       saveFrame("drawnCanvas");
       start = true;
+      lastAction = "draw";
     }
   }
   
@@ -43,9 +42,12 @@ class Rectangle extends Shape{
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       noFill();
-      rect(x-wd/2,y-ht/2,wd,ht);  //First two parameters default to upper-left corner coordinates, this changes it to the center.
+      ellipse(x,y,wd,ht);
       saveFrame("drawnCanvas");
+      Shape e = new Shape(x,y,wd,ht, "ellipse");
+      shapes.addShape(e);
       drawing = false;
+      lastAction = "draw";
     }
   }
 }

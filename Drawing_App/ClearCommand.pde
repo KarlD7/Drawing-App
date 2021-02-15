@@ -1,21 +1,33 @@
 public class ClearCommand implements Command{
   
- public ClearCommand(){
- }
- 
- @Override
- public void execute(){
-   saveFrame("undoCanvas");
-   background(255);
-   saveFrame("drawnCanvas");
- }
+  private ArrayList<Shape> temp;
+  private boolean cleared = false;
   
- @Override
- public void undo(){
-   undoCanvas = loadImage("undoCanvas.tif");
-   saveFrame("undoCanvas");
-   background(undoCanvas);
-   saveFrame("drawnCanvas");
- }
+  public ClearCommand(){
+  }
+ 
+  @Override
+  public void execute(){
+   if(!cleared){
+     saveFrame("undoCanvas");
+     background(255);
+     temp = shapes.getList();
+     shapes.clearList();
+     saveFrame("drawnCanvas");
+     cleared = true;
+   }
+  }
+  
+  @Override
+  public void undo(){
+   if(cleared){
+     undoCanvas = loadImage("undoCanvas.tif");
+     saveFrame("undoCanvas");
+     background(undoCanvas);
+     shapes.setList(temp);
+     saveFrame("drawnCanvas");
+     cleared = false;
+   }
+  }
   
 }

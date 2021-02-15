@@ -29,6 +29,7 @@ class Pencil{
     if(!start && !mousePressed){
       saveFrame("drawnCanvas");
       start = true;
+      lastAction = "draw";
     }
   }
 }
