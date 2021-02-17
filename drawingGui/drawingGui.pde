@@ -75,18 +75,6 @@ void setup(){
 //This is just how I am manually testing commands
 void keyPressed(){
  if(key == CODED){
-   if(keyCode == CONTROL){
-     undo.execute();
-   }
-   if(keyCode == SHIFT){
-     undo.undo(); 
-   }
-   if(keyCode == UP){
-     clear.execute(); 
-   }
-   if(keyCode == DOWN){
-     clear.undo(); 
-   }
    if(keyCode == LEFT){
      shapes.iterateShapes();
    }
