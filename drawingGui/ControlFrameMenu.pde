@@ -48,6 +48,7 @@ public class ControlFrameMenu extends PApplet {
   textFont(font);
   fill(highlight2);
   text("Welcome. Please select a mode.",160,200);
+  text("by VACKintosh",0,345);
   
   cp5.addButton("Advanced User")
   .setFont(font)
