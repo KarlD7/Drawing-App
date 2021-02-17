@@ -60,6 +60,11 @@ public class ControlFrame extends PApplet {
   cp5 = new ControlP5(this);
   surface.setLocation(10,10);
   
+  cp5.addButton("Help*")
+  .setFont(font)
+  .setSize(60,30)
+  .setPosition(w-120,20);
+  
 //Section for brushes  
   cp5.addButton("Brush")
   .plugTo(parent,"brush")
