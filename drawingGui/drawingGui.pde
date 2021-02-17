@@ -30,12 +30,15 @@ Transformation transformation;
 
 String lastAction;
 
+float isAdult;
+
 float brush;
 float rectBrush;
 float ellipseBrush;
 float triangleBrush;
 float arcBrush;
 float lineBrush;
+float colorButton;
 
 float undoButton;
 float redoButton;
@@ -44,6 +47,7 @@ float clearButton;
 int cr;
 int cg;
 int cb;
+int[] rgb;
 
 void settings(){
  size(1250,750); 
@@ -57,15 +61,13 @@ void setup(){
  pencil = new Pencil();
  rect = new RectangleBrush();
  ellipse = new EllipseBrush();
- int[] rgb = new int[]{cr,cg,cb};
+ //int[] rgb = new int[]{cr,cg,cb};
  shapes = new ShapeList();
  transformation = new Transformation();
  
  cvk = new CommandInvoker();
- strokeColor = new ColorCommand(rgb);
  undo = new UndoCommand();
  clear = new ClearCommand();
- strokeColor.execute();
  
  logo = loadImage("ihoc.png");
  font = "DejaVuSans.ttf";
@@ -74,7 +76,7 @@ void setup(){
 
 //This is just how I am manually testing commands
 void keyPressed(){
- if(key == CODED){
+  if(key == CODED){
    if(keyCode == LEFT){
      shapes.iterateShapes();
    }
@@ -88,11 +90,12 @@ void keyPressed(){
  } 
 }
 
+
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
-  int[] rgb = new int[]{cr,cg,cb};
-  strokeColor = new ColorCommand(rgb);
-  strokeColor.execute();
+  if(isAdult == 1.0) {
+    rgb = new int[]{cr,cg,cb};
+}
   //background(255);
   //strokeColor.execute();
   //strokeColor.undo();
@@ -142,5 +145,17 @@ void draw(){
   if(clearButton == 1.0){
    clear.execute(); 
   }
+  if(isAdult == 0.0){
+    if(colorButton == 0.0) rgb = new int[]{0,0,0};
+    if(colorButton == 0.1) rgb = new int[]{255,0,0};
+    if(colorButton == 0.2) rgb = new int[]{255,155,0};
+    if(colorButton == 0.3) rgb = new int[]{200,200,0};
+    if(colorButton == 0.4) rgb = new int[]{0,205,0};
+    if(colorButton == 0.5) rgb = new int[]{0,0,255};
+    if(colorButton == 0.6) rgb = new int[]{205,0,255};
+    if(colorButton == 0.7) rgb = new int[]{255,255,255};
+  }
+  strokeColor = new ColorCommand(rgb);
+  strokeColor.execute();
   
 }
