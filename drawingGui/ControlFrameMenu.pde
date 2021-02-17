@@ -41,6 +41,7 @@ public class ControlFrameMenu extends PApplet {
   cp5.addButton("Advanced User")
   .setFont(font)
   .setSize(200,40)
+  .plugTo(parent,"isAdult")
   .setPosition(50,250);
   au = cp5.get(Button.class,"Advanced User");
   
@@ -58,6 +59,7 @@ public class ControlFrameMenu extends PApplet {
       println("Opening Advanced window...");
       af = new ControlFrame(parent,350,700,"Advanced Drawing Window",font,true);
       openedWindow = true;
+      au.setValue(1.0);
     }
     else {
       println("Drawing window has already been opened. Please restart program in order to open another.");
