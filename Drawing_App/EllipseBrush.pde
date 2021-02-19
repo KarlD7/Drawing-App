@@ -8,6 +8,7 @@ class EllipseBrush extends ShapeBrush{
     noFill();
     if(start){
       if(mousePressed){
+        cleared = false;
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;

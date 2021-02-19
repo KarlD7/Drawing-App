@@ -16,6 +16,7 @@ class Pencil{
   public void paint(){
     if(start){
       if(mousePressed){
+        cleared = false;
         saveFrame("undoCanvas");
         start = false;
       }

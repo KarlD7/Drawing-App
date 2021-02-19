@@ -14,6 +14,7 @@ class RectangleBrush extends ShapeBrush{
     noFill();
     if(start){
       if(mousePressed){
+        cleared = false;
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -28,10 +29,15 @@ class RectangleBrush extends ShapeBrush{
         rect(startX,startY,endX-startX,endY-startY);
     }
     if(!start && !mousePressed){
+      int tempStroke = g.strokeColor;
+      stroke(255);
+      rect(startX,startY,endX-startX,endY-startY);
+      stroke(tempStroke);
       int wd = endX - startX;
       int ht = endY - startY;
       Shape r = new Shape(startX+wd/2, startY+ht/2, wd, ht, "rectangle");
       shapes.addShape(r);
+      r.redrawShape();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";
