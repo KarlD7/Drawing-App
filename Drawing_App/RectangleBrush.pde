@@ -9,6 +9,7 @@ class RectangleBrush extends ShapeBrush{
       if(mousePressed){
         noFill();
         cleared = false;
+        coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -32,6 +33,7 @@ class RectangleBrush extends ShapeBrush{
       Shape r = new Shape(startX+wd/2, startY+ht/2, wd, ht, "rectangle");
       shapes.addShape(r);
       r.redrawShape();
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";
@@ -45,6 +47,7 @@ class RectangleBrush extends ShapeBrush{
   public void paintNumerically(int x, int y, int wd, int ht){
     if(drawing){
       rectMode(CENTER); //Changes first two parameters to center coordinates
+      coords.cleanDisplay();
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
@@ -61,6 +64,7 @@ class RectangleBrush extends ShapeBrush{
     if(start){
      if(mousePressed){
        cleared = false;
+       coords.cleanDisplay();
        saveFrame("undoCanvas");
        startX = mouseX;
        startY = mouseY;

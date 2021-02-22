@@ -15,6 +15,7 @@ class TextBrush extends ShapeBrush{
       if(mousePressed){
         println(textSetter.getText());
         cleared = false;
+        coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -25,6 +26,7 @@ class TextBrush extends ShapeBrush{
       Shape t = new Shape(startX, startY, size, "text", text);
       shapes.addShape(t);
       t.redrawShape();
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";

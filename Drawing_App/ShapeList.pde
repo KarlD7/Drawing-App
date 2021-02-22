@@ -11,20 +11,24 @@ class ShapeList{
     shapeList = new ArrayList<Shape>();
   }
   
+  //Adds a shape to the end of the list
   public void addShape(Shape sh){
    shapeList.add(sh); 
   }
   
+  //Adds a shape to the desired index of the list
   public void addShape(int i, Shape sh){
    shapeList.add(i, sh); 
   }
   
+  //Adds a list of shapes to the end of the list
   public void addShapeList(ArrayList<Shape> addList){
     for(Shape sh : addList){
      shapeList.add(sh); 
     }
   }
   
+  //Removes a shape from the list
   public void removeShape(Shape shape){
    for(int i = 0; i < shapeList.size(); i++){
      if(shapeList.get(i) == shape){
@@ -35,6 +39,7 @@ class ShapeList{
    }
   }
   
+  //Removes a shape at the specified index of the list
   public void removeShape(int i){
     if(i < shapeList.size() && i >= 0){
       Shape temp = shapeList.get(i);
@@ -43,20 +48,40 @@ class ShapeList{
     }
   }
   
+  //Sets the currently active shape by index- Useful for transformations etc
   public void setActiveShape(int i){
    activeShape = shapeList.get(i);
    activeGroup.add(shapeList.get(i));
   }
   
+  //Sets the currently active shape by specific shape
   public void setActiveShape(Shape sh){
    activeShape = sh;
    activeGroup.add(activeShape);
   }
   
+  //Adds a shape to the current active group - This is going to be the more used function
   public void selectShape(int i){
    activeGroup.add(shapeList.get(i)); 
   }
   
+  //Deselect a specific shape from the current active group
+  public void deselectShape(Shape shape){
+    for(int i = 0; i < activeGroup.size(); i++){
+     if(activeGroup.get(i) == shape){
+       activeGroup.remove(i);
+     }
+   }
+  }
+  
+  //Deselect a shape by index from the current active group
+  public void deselectShape(int i){
+    if(i < activeGroup.size() && i >= 0){
+      activeGroup.remove(i);
+    }
+  }
+  
+  //Deselects all selections
   public void deselect(){
    activeShape = null;
    activeGroup = new ArrayList<Shape>();

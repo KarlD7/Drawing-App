@@ -8,6 +8,7 @@ class LineBrush extends ShapeBrush{
     if(start){
       if(mousePressed){
         cleared = false;
+        coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -24,6 +25,7 @@ class LineBrush extends ShapeBrush{
     if(!start && !mousePressed){
       Shape l = new Shape(startX, startY, endX, endY, "line");
       shapes.addShape(l);
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";
@@ -36,10 +38,12 @@ class LineBrush extends ShapeBrush{
   */
   public void paintNumerically(int x, int y, int a, int b){
     if(drawing){
+      coords.cleanDisplay();
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       line(x, y, a, b);
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       Shape l = new Shape(x, y, a, b, "line");
       shapes.addShape(l);

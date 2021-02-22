@@ -11,10 +11,12 @@ public class ClearCommand implements Command{
  
   @Override
   public void execute(){
+   coords.cleanDisplay();
    saveFrame("undoCanvas");
    background(255);
    temp = shapes.getList();
    shapes.clearList();
+   coords.cleanDisplay();
    saveFrame("drawnCanvas");
    cleared = true;
   }
@@ -23,9 +25,11 @@ public class ClearCommand implements Command{
   public void undo(){
    if(cleared){
      undoCanvas = loadImage("undoCanvas.tif");
+     coords.cleanDisplay();
      saveFrame("undoCanvas");
      background(undoCanvas);
      shapes.setList(temp);
+     coords.cleanDisplay();
      saveFrame("drawnCanvas");
      cleared = false;
    }

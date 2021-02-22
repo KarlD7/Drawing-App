@@ -121,7 +121,8 @@ void keyPressed(){
      
      //shapes.removeShape(0);
      
-     //coords.cleanDisplay();
+     coords.cleanDisplay();
+     
      //save.execute();
      //shapes.duplicateList(shapes.getList());
      
@@ -158,7 +159,7 @@ void folderSelected(File selection){
 
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
-  //coords.display();
+  coords.display();
   noFill();
 
   if(loadCanvas != null && loading == true){

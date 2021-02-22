@@ -7,7 +7,7 @@
 class TextSetter{
  
   private String text = "Sample text";
-  private int size = 12;
+  private int size = 11;
   
   public TextSetter(){
   }
