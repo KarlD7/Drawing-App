@@ -36,7 +36,7 @@ void setup(){
  background(255);
  imageMode(CENTER);
  textAlign(LEFT,TOP);
- saveFrame("drawnCanvas.tif");
+ saveFrame("drawnCanvas");
  //fill(255);
  
  //rectMode(CENTER);
