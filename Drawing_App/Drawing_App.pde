@@ -2,11 +2,13 @@ Pencil pencil;
 ShapeBrush rect;
 ShapeBrush ellipse;
 ShapeBrush line;
+ShapeBrush text;
 PImage drawnCanvas;
 PImage undoCanvas;
 PImage loadCanvas;
 ShapeList shapes;
 CoordinateDisplay coords;
+TextSetter textSetter;
 
 Shape activeShape;
 ArrayList<Shape> activeGroup;
@@ -26,20 +28,29 @@ String lastAction = "";
 
 boolean loading = false;
 
+int rgb[] = {0, 0, 0};
+
+
 void setup(){
  size(960,540); 
- background(255,255,255);
+ background(255);
  imageMode(CENTER);
+ textAlign(LEFT,TOP);
+ //fill(255);
+ 
  //rectMode(CENTER);
  //frameRate(120);
  
  coords = new CoordinateDisplay();
+ textSetter = new TextSetter();
  
  pencil = new Pencil();
  rect = new RectangleBrush();
  ellipse = new EllipseBrush();
  line = new LineBrush();
- int[] rgb = new int[]{255,0,0};
+ text = new TextBrush();
+ 
+ rgb = new int[]{255,0,0};
  shapes = new ShapeList();
  transformation = new Transformation();
  
@@ -51,6 +62,8 @@ void setup(){
  clear = new ClearCommand();
  save = new SaveCommand();
  load = new LoadCommand();
+
+ //load.execute();
  
  strokeColor.execute();
 }
@@ -77,20 +90,45 @@ void keyPressed(){
        println(i+1, shapes.getShape(i).type);
        println(shapes.getShape(i).wd);
      }*/
+     //int[] newColor = {0,255,0};
+     //transformation.changeFillColor(shapes.getSize()-1, newColor);
    }
    if(keyCode == RIGHT){
+     //textSetter.setText("Hello world");
+     //text.paint();
+     
+     //translate(960/2,540/2);
+     //scale(5);
+     
      //load.execute();
      //rect.paintNumerically(600,500,100,300);
-     //transformation.translateShape(0,50,"down");
      //shapes.setActiveShape(shapes.last());
      
-     //transformation.rotateShape(shapes.getShapeIndex(shapes.last()),45);
-     //transformation.resizeShape(0,100,100);
+     //transformation.changeText(shapes.getSize()-1, "debug");
+     
+     int[] newColor = {0,255,0};
+     //transformation.changeColor(shapes.getSize()-1, newColor);
+     //transformation.changeFillColor(shapes.getSize()-1, newColor);
+     //transformation.clearFill(shapes.getSize()-1);
+     //transformation.translateShape(shapes.getSize()-1, 50, 100);
+     //transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 45);
+     
+     //Shapes
+     //transformation.resizeShape(shapes.getSize()-1,200,200);
+     
+     //Text
+     //transformation.resizeShape(shapes.getSize()-1, 32);
+     
      //shapes.removeShape(0);
      
      //coords.cleanDisplay();
      //save.execute();
      //shapes.duplicateList(shapes.getList());
+     
+     //DEMO - Color
+     //transformation.changeColor(shapes.getSize()-1, newColor);
+     //transformation.changeFillColor(shapes.getSize()-1, newColor);
+     //transformation.clearFill(shapes.getSize()-1);
 
    if(keyCode == ALT) println(mouseX, mouseY);
    }
@@ -120,7 +158,8 @@ void folderSelected(File selection){
 
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
-  coords.display();
+  //coords.display();
+  noFill();
 
   if(loadCanvas != null && loading == true){
     imageMode(CORNER);
@@ -132,6 +171,14 @@ void draw(){
     shapes.addShape(i);
     loading = false;
   }
+  
+  //DEMO - Color
+  //rect.paint();
+  text.paint();
+  //line.paint();
+  
+  //textSetter.setText("Hello world");
+  //text.paint();
   
   //background(255);
   //strokeColor.execute();
@@ -148,8 +195,11 @@ void draw(){
   //rotate(PI);
   //rect(100,200,100,300);
   
+  //rect.paintOneClick();
+  //ellipse.paintOneClick();
+  
   //ellipse.paintNumerically(600,500,100,300);
-  rect.paint();
+  //rect.paint();
   //ellipse.paint();
   //line.paint();
   //line.paintNumerically(600,500,700,700);

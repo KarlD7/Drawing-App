@@ -51,4 +51,24 @@ class EllipseBrush extends ShapeBrush{
       lastAction = "draw";
     }
   }
+  
+  public void paintOneClick(){
+    noFill();
+    if(start){
+     if(mousePressed){
+       cleared = false;
+       saveFrame("undoCanvas");
+       startX = mouseX;
+       startY = mouseY;
+       start = false;
+     }
+    }
+    if(!start && !mousePressed){
+       Shape r = new Shape(startX, startY, 75, 75, "ellipse");
+       shapes.addShape(r);
+       lastAction = "draw";
+       start = true;
+    }
+  }
+  
 }

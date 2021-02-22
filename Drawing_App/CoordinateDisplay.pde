@@ -17,8 +17,10 @@ class CoordinateDisplay{
     background(drawnCanvas);
     info = ("X: " + x + " Y: " + y);
     textSize(12);
+    int tempFill = g.fillColor;
     fill(0);
-    text(info, 5, 535);
+    text(info, 5, 525);
+    fill(tempFill);
   }
   
   public void cleanDisplay(){

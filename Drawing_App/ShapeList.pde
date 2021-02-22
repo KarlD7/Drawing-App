@@ -1,3 +1,7 @@
+/**
+* Contains an ArrayList of shapes to store all shapes drawn on the canvas
+*/
+
 class ShapeList{
   
   private ArrayList<Shape> shapeList; 
@@ -49,7 +53,7 @@ class ShapeList{
    activeGroup.add(activeShape);
   }
   
-  public void addToSelection(int i){
+  public void selectShape(int i){
    activeGroup.add(shapeList.get(i)); 
   }
   

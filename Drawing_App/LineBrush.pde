@@ -48,4 +48,8 @@ class LineBrush extends ShapeBrush{
     }
   }
   
+  public void paintOneClick(){
+    //Does nothing
+  }
+  
 }

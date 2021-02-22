@@ -13,14 +13,14 @@ class Transformation{
   *
   * Note that this rotates a shape TO a specified angle, NOT by a specified angle i.e. If you want to rotate an object by 45 degrees, and then 45 more degrees, the second call to this function would have to be angle = 90.
   */
-  //Need to add conditions for lines
+  //Need to add condition for lines
   public void rotateShape(int i, int angle){
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
       if(temp != null){
-        shapes.removeShape(i);
         lastRemoved = temp.duplicateShape();
+        shapes.removeShape(i);
         temp.setAngle(angle);
         println(temp.angle);
         //Making it easier to rotate about the center of the shape, the order of the following functions is important
@@ -32,7 +32,7 @@ class Transformation{
           shapes.addShape(temp);
           rectMode(CORNER);
         }
-        else if (temp.type.equals("ellipse") || temp.type.equals("image")){
+        else if (temp.type.equals("ellipse") || temp.type.equals("image") || temp.type.equals("text") || temp.type.equals("line")){
           temp.redrawShapeAtOrigin();
           shapes.addShape(temp);
         }
@@ -45,14 +45,26 @@ class Transformation{
     }
   }
   
+  /**
+  * i: index of shape
+  * wd: amount to increase shape width by
+  * ht: amount to increase shape height by
+  * If trying to shrink it beyond a width/height of 0, cancels the function.
+  *
+  * If the shape is a line:
+  * wd: amount to increase the end x-coordinate of the line by
+  * ht: amount to increase the end y-coordinate of the line by
+  */
+  
   public void resizeShape(int i, int wd, int ht){
     saveFrame("undoCanvas");
     Shape temp = shapes.getShape(i);
-    shapes.removeShape(i);
     if(temp != null){
-     println("debug");
-     temp.wd = wd;
-     temp.ht = ht;
+     lastRemoved = temp.duplicateShape();
+     shapes.removeShape(i);
+     if(temp.wd + wd < 0 || temp.ht + ht < 0) return;
+     temp.wd += wd;
+     temp.ht += ht;
      temp.redrawShape();
      shapes.addShape(temp);
      saveFrame("drawnCanvas");
@@ -61,15 +73,119 @@ class Transformation{
   }
   
   /**
-  * i: index of shape
-  * pix : amount of pixels to translate
-  * dir: direction to translate (left, right, up, down)
-  * example: translateShape(0, 200, "left")
-  * 
-  * //I am going to make this simpler soon, so you won't have to specify direction and will act more like rotateShape().
-  * 
+  * i: index of text shape
+  * size: new font size
+  * Only works on shapes of type text
   */
-  public void translateShape(int i, int pix, String dir){
+  
+  public void resizeShape(int i, int size){
+    saveFrame("undoCanvas");
+    Shape temp = shapes.getShape(i);
+    if(temp != null && temp.type.equals("text")){
+      lastRemoved = temp.duplicateShape();
+      shapes.removeShape(i);
+      Shape t = new Shape(temp.x, temp.y, size, temp.type, temp.text);
+      shapes.addShape(t);
+      saveFrame("drawnCanvas");
+      lastAction = "transformation";
+    }
+  }
+  
+  /**
+  * i: index of shape
+  * xPix : amount of pixels to translate horizontally. Positive values for right, negative for left.
+  * yPix: amount of pixels to translate horizontally. Positive values for down, negative for up.
+  */
+  public void translateShape(int i, int xPix, int yPix){
+    saveFrame("undoCanvas");
+    if(i < shapes.getSize() && i >= 0){
+      Shape temp = shapes.getShape(i);
+      if(temp != null){
+          lastRemoved = temp.duplicateShape();
+          shapes.removeShape(i);
+          Shape r;
+          if(temp.type.equals("line")){
+            r = new Shape(temp.x+xPix, temp.y+yPix, temp.wd+xPix, temp.ht+yPix, temp.type);
+          }
+          else{
+            r = new Shape(temp.x+xPix, temp.y+yPix, temp.wd, temp.ht, temp.type);
+          }
+          shapes.addShape(r);
+          saveFrame("drawnCanvas");
+          lastAction = "transformation";
+        }
+      }
+    }
+    
+  
+  /**
+  * Changes the stroke color of shapes (the outline)
+  * If text, changes the font color
+  */
+  public void changeColor(int i, int[] rgb){
+    saveFrame("undoCanvas");
+    if(i < shapes.getSize() && i >= 0){
+      Shape temp = shapes.getShape(i);
+      if(temp != null){
+        temp.setColor(rgb);
+      }
+    }
+    saveFrame("drawnCanvas");
+    lastAction = "transformation";
+  }
+  
+  /**
+  * Changes the fill color of shapes. For text use changeColor(...)
+  */
+  public void changeFillColor(int i, int[] rgb){
+    saveFrame("undoCanvas");
+    if(i < shapes.getSize() && i >= 0){
+      Shape temp = shapes.getShape(i);
+      if(temp != null){
+        temp.setFillColor(rgb);
+      }
+    }
+    saveFrame("drawnCanvas");
+    lastAction = "transformation";
+  }
+  
+  /**
+  * Clears the fill color of a shape, making it noFill
+  */
+  public void clearFill(int i){
+   saveFrame("undoCanvas");
+    if(i < shapes.getSize() && i >= 0){
+      Shape temp = shapes.getShape(i);
+      if(temp != null){
+        temp.clearFillColor();
+      }
+    }
+    saveFrame("drawnCanvas");
+    lastAction = "transformation";
+  }
+  
+  /**
+  * Changes the text of a text shape
+  */
+  public void changeText(int i, String text){
+   saveFrame("undoCanvas");
+   if(i < shapes.getSize() && i >= 0){
+    Shape temp = shapes.getShape(i);
+    if(temp != null){
+      lastRemoved = temp.duplicateShape();
+      shapes.removeShape(i);
+      saveFrame("drawnCanvas");
+      Shape t = new Shape(temp.x, temp.y, temp.size, temp.type, text);
+      shapes.addShape(t);
+      lastAction = "transformation";
+    }
+   }
+  }
+    
+    
+  
+  //The old stupid way
+  /*public void translateShape(int i, int pix, String dir){
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -129,5 +245,5 @@ class Transformation{
         }
       }
     }
-  }
+  }*/
 }

@@ -1,3 +1,7 @@
+/**
+* Saves the current canvas to a selected directory
+*/
+
 class SaveCommand implements Command{
  
   public SaveCommand(){

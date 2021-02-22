@@ -1,3 +1,7 @@
+/**
+* Clears the canvas
+*/
+
 public class ClearCommand implements Command{
   
   private ArrayList<Shape> temp;

@@ -1,3 +1,7 @@
+/**
+* Freehand drawing tool
+*/
+
 class Pencil{
   private boolean start = true;
 

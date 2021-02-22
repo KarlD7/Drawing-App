@@ -1,3 +1,7 @@
+/**
+* Undoes and redoes the most recent command. Only works once for now.
+*/
+
 public class UndoCommand implements Command{
   
   private Shape temp;
@@ -14,9 +18,7 @@ public class UndoCommand implements Command{
         temp = shapes.last();
         shapes.removeShape(temp);
         if(lastAction.equals("transformation")){
-          println(lastAction);
           shapes.addShape(lastRemoved);
-          println(lastRemoved.angle);
         }
         background(undoCanvas);
         saveFrame("drawnCanvas.tif");
@@ -29,9 +31,7 @@ public class UndoCommand implements Command{
         temp = shapes.last();
         shapes.removeShape(temp);
         if(lastAction.equals("transformation")){
-          println(lastAction);
           shapes.addShape(lastRemoved);
-          println(lastRemoved.angle);
         }
         background(undoCanvas);
         saveFrame("drawnCanvas.tif");

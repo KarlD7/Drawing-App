@@ -1,19 +1,13 @@
 class RectangleBrush extends ShapeBrush{
- /* private int startX;
-  private int startY;
-  private int endX;
-  private int endY;
-  private boolean start = true;
-  private boolean drawing = true;*/
   
   public RectangleBrush(){
     super();
   }
   
   public void paint(){
-    noFill();
     if(start){
       if(mousePressed){
+        noFill();
         cleared = false;
         saveFrame("undoCanvas");
         startX = mouseX;
@@ -54,13 +48,32 @@ class RectangleBrush extends ShapeBrush{
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
-      noFill();
       rect(x, y, wd, ht);
       Shape r = new Shape(x, y, wd, ht, "rectangle");
       shapes.addShape(r);
       drawing = false;
-      rectMode(CORNER); //Back to default (Manually drawing uses this mode)
+      rectMode(CORNER); //Back to default (Manually drawing uses this mode) - Gonna change this
       lastAction = "draw";
+    }
+  }
+  
+  public void paintOneClick(){
+    if(start){
+     if(mousePressed){
+       cleared = false;
+       saveFrame("undoCanvas");
+       startX = mouseX;
+       startY = mouseY;
+       start = false;
+     }
+    }
+    if(!start && !mousePressed){
+      rectMode(CENTER);
+       Shape r = new Shape(startX, startY, 81, 50, "rectangle");
+       shapes.addShape(r);
+       lastAction = "draw";
+       rectMode(CORNER);
+       start = true;
     }
   }
 }

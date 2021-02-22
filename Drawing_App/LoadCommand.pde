@@ -1,3 +1,7 @@
+/**
+* Loads an image to the canvas
+*/
+
 class LoadCommand implements Command{
  
   public LoadCommand(){

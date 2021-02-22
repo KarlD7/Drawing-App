@@ -1,3 +1,7 @@
+/**
+* Changes current stroke color
+*/
+
 public class ColorCommand implements Command{
  
   private int[] newColor = new int[]{0,0,0};
