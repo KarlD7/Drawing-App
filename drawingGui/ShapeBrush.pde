@@ -1,3 +1,7 @@
+/**
+* Abstract class all shape brush tools inherit from
+*/
+
 abstract class ShapeBrush{
   public boolean start = true;
   public boolean drawing = true;
@@ -8,4 +12,5 @@ abstract class ShapeBrush{
   
   public abstract void paint();
   public abstract void paintNumerically(int x, int y, int wd, int ht);
+  public abstract void paintOneClick();
 }

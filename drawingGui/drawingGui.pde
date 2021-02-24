@@ -1,14 +1,10 @@
 import controlP5.*;
 
 ControlP5 cp5;
-//PImage logo;
-//String font;
 ControlFrameMenu menu;
 ControlFrame kf;
 ControlFrame af;
 boolean openedWindow;
-
-//PImage rectImg;
 
 color main;
 color highlight1;
@@ -20,56 +16,129 @@ Button su;
 Pencil pencil;
 ShapeBrush rect;
 ShapeBrush ellipse;
+ShapeBrush line;
+ShapeBrush text;
 PImage drawnCanvas;
 PImage undoCanvas;
+PImage loadCanvas;
 ShapeList shapes;
+CoordinateDisplay coords;
+TextSetter textSetter;
+
+Shape activeShape;
+ArrayList<Shape> activeGroup;
+boolean cleared = false;
+Shape lastRemoved;
 
 CommandInvoker cvk;
 Command strokeColor;
 Command undo;
 Command clear;
+Command save;
+Command load;
 Transformation transformation;
 
-String lastAction;
+String lastAction = "";
+boolean loading = false;
 
 float isAdult;
 
-float brush;
-float rectBrush;
-float ellipseBrush;
-float triangleBrush;
-float arcBrush;
-float lineBrush;
 float colorButton;
+float drawButton;
 
 float undoButton;
 float redoButton;
 float clearButton;
+float saveAsButton;
+float saveButton;
+float loadButton;
+float rot;
 
 int cr;
 int cg;
 int cb;
 int[] rgb;
 
+String textSet;
+
+Boolean saved;
+Boolean loaded;
+Boolean undone;
+
+void fileSelected(File selection){
+    if(selection == null){
+       println("Cancelled.");
+    }
+    else{
+      println("Selected: " + selection.getAbsolutePath());
+      loadCanvas = loadImage(selection.getAbsolutePath());
+      loading = true;
+    }
+}
+
+void folderSelected(File selection){
+   if(selection == null){ 
+     println("Cancelled.");
+   }
+   else{
+     println("Selected: " + selection.getAbsolutePath());
+     drawnCanvas.save(selection.getAbsolutePath());
+   }
+}
+
+public void setText(String newString){
+  textSet = newString;
+}
+
+void keyPressed(){
+ if(key == CODED){
+   if(keyCode == UP){
+     transformation.translateShape(activeGroup.size(),0,20);
+   }
+   if(keyCode == DOWN){
+     transformation.translateShape(activeGroup.size(),0,-20);
+   }
+   if(keyCode == LEFT){
+     transformation.translateShape(activeGroup.size(),20,0);
+   }
+   if(keyCode == RIGHT){
+     transformation.translateShape(activeGroup.size(),-20,0);
+   }
+ }
+}
+
 void settings(){
- size(1250,750); 
+  size(960,540);
+
 }
 
 void setup(){
  background(255,255,255);
- //rectMode(CENTER);
- //frameRate(120);
+ imageMode(CENTER);
+ textAlign(LEFT,TOP);
+ saveFrame("drawnCanvas");
+ surface.setLocation(0,0);
  
  pencil = new Pencil();
  rect = new RectangleBrush();
  ellipse = new EllipseBrush();
- //int[] rgb = new int[]{cr,cg,cb};
  shapes = new ShapeList();
+ line = new LineBrush();
+ text = new TextBrush();
  transformation = new Transformation();
+ 
+ activeGroup = new ArrayList<Shape>();
  
  cvk = new CommandInvoker();
  undo = new UndoCommand();
  clear = new ClearCommand();
+ save = new SaveCommand();
+ load = new LoadCommand();
+ 
+ coords = new CoordinateDisplay();
+ textSetter = new TextSetter();
+ textSet = "";
+ undone = false;
  
  PImage logo = loadImage("ihoc.png");
  PImage rectImg = loadImage("rec.png");
@@ -77,74 +146,70 @@ void setup(){
  PImage elliImg = loadImage("elli.png");
  PImage arcImg = loadImage("arc.png");
  PImage lineImg = loadImage("line.png");
+ PImage rectImg2 = loadImage("recPressed.png");
+ PImage triImg2 = loadImage("triPressed.png");
+ PImage elliImg2= loadImage("elliPressed.png");
+ PImage arcImg2 = loadImage("arcPressed.png");
+ PImage lineImg2 = loadImage("linePressed.png");
+ PImage rotL = loadImage("rotleft.png");
+ PImage rotLP = loadImage("rotleftPressed.png");
+ PImage rotR = loadImage("rotright.png");
+ PImage rotRP = loadImage("rotrightPressed.png");
  String font = "DejaVuSans.ttf";
- menu = new ControlFrameMenu(this,600,350,"Name of Drawing App",logo,createFont(font,20),rectImg,triImg,elliImg,arcImg,lineImg);
-}
-
-//This is just how I am manually testing commands
-void keyPressed(){
-  if(key == CODED){
-   if(keyCode == LEFT){
-     shapes.iterateShapes();
-   }
-   if(keyCode == RIGHT){
-     //rect.paintNumerically(600,500,100,300);
-     //transformation.translateShape(shapes.getSize()-1,50,"up"); 
-     //transformation.rotateShape(0,-45);
-     //transformation.resizeShape(0,100,10);
-   }
-   if(keyCode == ALT) println(mouseX, mouseY);
- } 
+ menu = new ControlFrameMenu(this,600,360,"NcPaint",logo,createFont(font,20),rectImg,triImg,elliImg,arcImg,lineImg,rectImg2,triImg2,elliImg2,arcImg2,lineImg2,rotL,rotLP,rotR,rotRP);
 }
 
 
-//Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
-  if(isAdult == 1.0) {
-    rgb = new int[]{cr,cg,cb};
-}
-  //background(255);
-  //strokeColor.execute();
-  //strokeColor.undo();
+  if(loadCanvas != null && loading == true){
+    imageMode(CORNER);
+    image(loadCanvas, 0, 0); 
+    imageMode(CENTER);
+    int wd = loadCanvas.width;
+    int ht = loadCanvas.height;
+    Shape i = new Shape(0+wd/2, 0+ht/2, wd, ht, "image", loadCanvas);
+    shapes.addShape(i);
+    loading = false;
+  }
   
-  //cvk.addCommand(strokeColor);
-  //cvk.executeCommand();
-  //cvk.undoCommand();
+  coords.display();
+  noFill();
   
-  //rect.paintNumerically(600,500,100,300);
-  //rect(100,200,100,300);
-  //translate(50,50);
-  //rotate(PI);
-  //rect(100,200,100,300);
-  
-  //ellipse.paintNumerically(600,500,100,300);
-  //transformation.translateShape(0,200,"up");
-  //transformation.rotateShape(0,45);
-  
-  //shapes.removeShape(0);
-  //Shape t = shapes.getShape(0);
-  //t.eraseShape();
-  if(brush == 1.0){
+  if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -45);
+  if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 45);
+  if(drawButton == 0.0){
    pencil.paint(); 
   }
-  if(rectBrush == 1.0){
+  if(drawButton == 0.1){
    rect.paint(); 
   }
-  if(ellipseBrush == 1.0){
+  if(drawButton == 0.2){
     ellipse.paint();
   }
-  if(triangleBrush == 1.0){
+  if(drawButton == 0.3){
    //triangle.paint(); 
   }
-  if(arcBrush == 1.0){
+  if(drawButton == 0.4){
    //arc.paint(); 
   }
-  if(lineBrush == 1.0){
-   //line.paint(); 
+  if(drawButton == 0.5){
+   line.paint(); 
   }
+  if(drawButton == 0.6){
+   textSetter.setText(textSet);
+   text.paint(); 
+  }
+  if(drawButton == 0.7){
+    transformation.changeFillColor(2,rgb);
+  }
+  
   if(undoButton == 1.0){
-   undo.execute(); 
+   if(!undone){
+    undo.execute();
+    undone = true;
+   }
   }
+  if(undoButton == 0.0) undone = false;
   if(redoButton == 1.0){
    undo.undo();
    clear.undo();
@@ -152,6 +217,22 @@ void draw(){
   if(clearButton == 1.0){
    clear.execute(); 
   }
+  if(saveButton == 1.0){
+    if(!saved){
+     save.execute();
+     saved = true;
+    }
+  }
+  if(saveButton == 0.0) saved = false;
+  if(loadButton == 1.0){
+    if(!loaded){
+     load.execute();
+     loaded = true;
+    }
+  }
+  if(loadButton == 0.0) loaded = false;
+  
+  
   if(isAdult == 0.0){
     if(colorButton == 0.0) rgb = new int[]{0,0,0};
     if(colorButton == 0.1) rgb = new int[]{255,0,0};
@@ -162,7 +243,16 @@ void draw(){
     if(colorButton == 0.6) rgb = new int[]{205,0,255};
     if(colorButton == 0.7) rgb = new int[]{255,255,255};
   }
+  if(isAdult == 1.0) {
+   rgb = new int[]{cr,cg,cb};
+  }
   strokeColor = new ColorCommand(rgb);
   strokeColor.execute();
+  
+  if(!lastAction.equals("")){
+    for(Shape s : shapes.getList()){
+      if(s != null) s.redrawShape(); 
+    }
+  }
   
 }

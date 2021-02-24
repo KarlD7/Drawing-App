@@ -8,6 +8,8 @@ class EllipseBrush extends ShapeBrush{
     noFill();
     if(start){
       if(mousePressed){
+        cleared = false;
+        coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -26,6 +28,7 @@ class EllipseBrush extends ShapeBrush{
       int ht = (endY-startY)*2;
       Shape e = new Shape(startX, startY, wd, ht, "ellipse");
       shapes.addShape(e);
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";
@@ -38,11 +41,13 @@ class EllipseBrush extends ShapeBrush{
   */
   public void paintNumerically(int x, int y, int wd, int ht){
     if(drawing){
+      coords.cleanDisplay();
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       noFill();
       ellipse(x,y,wd,ht);
+      coords.cleanDisplay();
       saveFrame("drawnCanvas");
       Shape e = new Shape(x,y,wd,ht, "ellipse");
       shapes.addShape(e);
@@ -50,4 +55,25 @@ class EllipseBrush extends ShapeBrush{
       lastAction = "draw";
     }
   }
+  
+  public void paintOneClick(){
+    noFill();
+    if(start){
+     if(mousePressed){
+       cleared = false;
+       coords.cleanDisplay();
+       saveFrame("undoCanvas");
+       startX = mouseX;
+       startY = mouseY;
+       start = false;
+     }
+    }
+    if(!start && !mousePressed){
+       Shape r = new Shape(startX, startY, 75, 75, "ellipse");
+       shapes.addShape(r);
+       lastAction = "draw";
+       start = true;
+    }
+  }
+  
 }
