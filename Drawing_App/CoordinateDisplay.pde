@@ -34,7 +34,7 @@ class CoordinateDisplay{
     int tempStroke = g.strokeColor;
     fill(255);
     stroke(255);
-    rect(4, 525, 75, 12);
+    rect(4, 525, 100, 12);
     fill(tempFill);
     stroke(tempStroke);
   }

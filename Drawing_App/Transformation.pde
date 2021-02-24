@@ -14,7 +14,7 @@ class Transformation{
   *
   * Note that this rotates a shape TO a specified angle, NOT by a specified angle i.e. If you want to rotate an object by 45 degrees, and then 45 more degrees, the second call to this function would have to be angle = 90.
   */
-  //Need to add condition for lines and images
+  //Need to add condition for lines and images and curves
   public void rotateShape(int i, int angle){
     coords.cleanDisplay();
     saveFrame("undoCanvas");
@@ -34,7 +34,7 @@ class Transformation{
           shapes.addShape(temp);
           rectMode(CORNER);
         }
-        else if (temp.type.equals("ellipse") || temp.type.equals("image") || temp.type.equals("text") || temp.type.equals("line")){
+        else if (temp.type.equals("ellipse") || temp.type.equals("image") || temp.type.equals("text") || temp.type.equals("line") || temp.type.equals("arc") || temp.type.equals("triangle")){
           temp.redrawShapeAtOrigin();
           shapes.addShape(temp);
         }

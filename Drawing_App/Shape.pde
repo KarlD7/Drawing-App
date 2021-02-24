@@ -41,6 +41,13 @@ class Shape{
   private String text = textSetter.getText();
   private int size = textSetter.getSize();
   
+  //
+  private int endX;
+  private int endY;
+  private int cp1X;
+  private int cp1Y;
+  private int cp2X;
+  private int cp2Y;
   
   public Shape(int x, int y, int wd, int ht, String type){
     this.x = x;
@@ -91,6 +98,22 @@ class Shape{
     this.tempCol = g.strokeColor;
   }
   
+  //Constructor for curves
+  public Shape(int x, int y, int endX, int endY, int cp1X, int cp1Y, int cp2X, int cp2Y, String type){
+    this.x = x;
+    this.y = y;
+    this.endX = endX;
+    this.endY = endY;
+    this.cp1X = cp1X;
+    this.cp1Y = cp1Y;
+    this.cp2X = cp2X;
+    this.cp2Y = cp2Y;
+    this.type = type;
+    this.angle = 0;
+    this.col = g.strokeColor;
+    this.tempCol = g.strokeColor;
+  }
+  
   //Empty shape
   public Shape(){
   }
@@ -105,6 +128,9 @@ class Shape{
       else if(type.equals("ellipse")){
         ellipse(x,y,wd,ht);
       }
+      else if(type.equals("triangle")){
+        triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
+      }
       else if(type.equals("image")){
         rectMode(CENTER);
         fill(255);
@@ -116,6 +142,9 @@ class Shape{
         fill(255);
         rect(x, y, text.length()*(size*1.5), size*1.5);
         noFill();
+      }
+      else if(type.equals("line")){
+        line(x,y,wd,ht);
       }
       stroke(tempStroke);
       strokeWeight(1);
@@ -153,6 +182,16 @@ class Shape{
         }
         else if(angle == 0) ellipse(x,y,wd,ht);
       }
+      else if(type.equals("triangle")){
+        if(angle != 0){
+          translate(x,y);
+          rotate(radians(angle));
+          redrawShapeAtOrigin();
+          rotate(radians(angle*-1));
+          translate(x*-1,y*-1);
+        }
+        else if(angle == 0) triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
+      }
       else if(type.equals("line")){
          if(angle != 0){
           translate(x,y);
@@ -162,6 +201,16 @@ class Shape{
           translate(x*-1,y*-1);
         }
         else if(angle == 0) line(x,y,wd,ht);
+      }
+      else if(type.equals("arc")){
+        if(angle != 0){
+          translate(x,y);
+          rotate(radians(angle));
+          redrawShapeAtOrigin();
+          rotate(radians(angle*-1));
+          translate(x*-1,y*-1);
+        }
+        else if(angle == 0) curve(cp1X, cp1Y, x, y, endX, endY, cp2X, cp2Y);
       }
       else if(type.equals("image")){
         if(angle != 0){
@@ -208,8 +257,14 @@ class Shape{
     else if(type.equals("ellipse")){
         ellipse(0,0,wd,ht);
     }
+    else if(type.equals("triangle")){
+        triangle(0-wd,0+(ht/2),0,0-(ht/2),0+wd,0+ht/2);
+    }
     else if(type.equals("line")){
         line(0, 0, wd, ht); 
+    }
+    else if(type.equals("arc")){
+        curve(
     }
     else if(type.equals("image")){
         image(img, 0, 0, wd, ht);

@@ -3,6 +3,8 @@ ShapeBrush rect;
 ShapeBrush ellipse;
 ShapeBrush line;
 ShapeBrush text;
+ShapeBrush arc;
+ShapeBrush triangle;
 PImage drawnCanvas;
 PImage undoCanvas;
 PImage loadCanvas;
@@ -50,6 +52,8 @@ void setup(){
  ellipse = new EllipseBrush();
  line = new LineBrush();
  text = new TextBrush();
+ arc = new ArcBrush();
+ triangle = new TriangleBrush();
  
  rgb = new int[]{255,0,0};
  shapes = new ShapeList();
@@ -87,10 +91,9 @@ void keyPressed(){
    if(keyCode == LEFT){
      //shapes.iterateShapes();
      println(shapes.getSize());
-     /*for(int i = 0; i < shapes.getSize(); i++){
+     for(int i = 0; i < shapes.getSize(); i++){
        println(i+1, shapes.getShape(i).type);
-       println(shapes.getShape(i).wd);
-     }*/
+     }
      //int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
    }
@@ -122,7 +125,7 @@ void keyPressed(){
      
      //shapes.removeShape(0);
      
-     coords.cleanDisplay();
+     //coords.cleanDisplay();
      
      //save.execute();
      //shapes.duplicateList(shapes.getList());
@@ -174,9 +177,12 @@ void draw(){
     loading = false;
   }
   
+  arc.paint();
+  //triangle.paint();
+  
   //DEMO - Color
   //rect.paint();
-  text.paint();
+  //text.paint();
   //line.paint();
   
   //textSetter.setText("Hello world");
