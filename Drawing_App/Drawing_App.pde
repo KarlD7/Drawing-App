@@ -23,6 +23,7 @@ Command undo;
 Command clear;
 Command save;
 Command load;
+Command weight;
 
 Transformation transformation;
 
@@ -67,6 +68,7 @@ void setup(){
  clear = new ClearCommand();
  save = new SaveCommand();
  load = new LoadCommand();
+ weight = new WeightCommand(10);
 
  //load.execute();
  
@@ -91,13 +93,15 @@ void keyPressed(){
    if(keyCode == LEFT){
      //shapes.iterateShapes();
      println(shapes.getSize());
-     for(int i = 0; i < shapes.getSize(); i++){
+     /*for(int i = 0; i < shapes.getSize(); i++){
        println(i+1, shapes.getShape(i).type);
-     }
+     }*/
+     //weight.undo();
      //int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
    }
    if(keyCode == RIGHT){
+     //weight.execute();
      //textSetter.setText("Hello world");
      //text.paint();
      
@@ -177,7 +181,7 @@ void draw(){
     loading = false;
   }
   
-  arc.paint();
+  //arc.paint();
   //triangle.paint();
   
   //DEMO - Color
@@ -196,7 +200,7 @@ void draw(){
   //cvk.executeCommand();
   //cvk.undoCommand();
   
-  //pencil.paint();
+  pencil.paint();
   //rect.paintNumerically(600,500,100,300);
   //rect(100,200,100,300);
   //translate(50,50);

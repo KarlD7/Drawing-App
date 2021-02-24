@@ -8,8 +8,6 @@ public class ColorCommand implements Command{
   
   private int[] prevColor = new int[3];
   
-  private int weight;
-  
   public ColorCommand(int[] rgb){
     this.prevColor = newColor;
     this.newColor = rgb;

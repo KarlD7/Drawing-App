@@ -83,7 +83,6 @@ class ArcBrush extends ShapeBrush{
         curve(cp1X, cp1Y, startX, startY, endX, endY, cp2X, cp2Y);
         Shape a = new Shape(startX, startY, endX, endY, cp1X, cp1Y, cp2X, cp2Y, "arc");
         shapes.addShape(a);
-        //a.redrawShape();
         coords.cleanDisplay();
         saveFrame("drawnCanvas");
         start = true;
