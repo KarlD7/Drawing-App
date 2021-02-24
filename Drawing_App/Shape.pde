@@ -264,7 +264,7 @@ class Shape{
         line(0, 0, wd, ht); 
     }
     else if(type.equals("arc")){
-        curve(
+        //
     }
     else if(type.equals("image")){
         image(img, 0, 0, wd, ht);
