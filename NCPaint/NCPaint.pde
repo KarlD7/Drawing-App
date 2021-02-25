@@ -1,5 +1,7 @@
 import controlP5.*;
+import processing.sound.*;
 
+SoundFile kidsHelp;
 ControlP5 cp5;
 ControlFrameMenu menu;
 ControlFrame kf;
@@ -18,11 +20,13 @@ ShapeBrush rect;
 ShapeBrush ellipse;
 ShapeBrush line;
 ShapeBrush text;
+ShapeBrush triangle;
+ShapeBrush arc;
 PImage drawnCanvas;
 PImage undoCanvas;
 PImage loadCanvas;
 ShapeList shapes;
-CoordinateDisplay coords;
+//CoordinateDisplay coords;
 TextSetter textSetter;
 
 Shape activeShape;
@@ -36,6 +40,7 @@ Command undo;
 Command clear;
 Command save;
 Command load;
+Command weight;
 Transformation transformation;
 
 String lastAction = "";
@@ -54,12 +59,19 @@ float saveButton;
 float loadButton;
 float rot;
 
+float helpButton;
+
 int cr;
 int cg;
 int cb;
 int[] rgb;
+int stk;
 
 String textSet;
+int numX;
+int numY;
+int numW;
+int numH;
 
 Boolean saved;
 Boolean loaded;
@@ -90,25 +102,32 @@ public void setText(String newString){
   textSet = newString;
 }
 
+public void setInt(char n,int num){
+ if(n == 'x') numX = num;
+ if(n == 'y') numY = num;
+ if(n == 'w') numW = num;
+ if(n == 'h') numH = num;
+}
+
 void keyPressed(){
  if(key == CODED){
    if(keyCode == UP){
-     transformation.translateShape(activeGroup.size(),0,20);
-   }
-   if(keyCode == DOWN){
      transformation.translateShape(activeGroup.size(),0,-20);
    }
+   if(keyCode == DOWN){
+     transformation.translateShape(activeGroup.size(),0,20);
+   }
    if(keyCode == LEFT){
-     transformation.translateShape(activeGroup.size(),20,0);
+     transformation.translateShape(activeGroup.size(),-20,0);
    }
    if(keyCode == RIGHT){
-     transformation.translateShape(activeGroup.size(),-20,0);
+     transformation.translateShape(activeGroup.size(),20,0);
    }
  }
 }
 
 void settings(){
-  size(960,540);
+  size(1000,700);
 
 }
 
@@ -118,6 +137,11 @@ void setup(){
  textAlign(LEFT,TOP);
  saveFrame("drawnCanvas");
  surface.setLocation(0,0);
+ noFill();
+ stk = 1;
+ rgb = new int[]{0,0,0};
+ 
+ kidsHelp = new SoundFile(this,"help");
  
  pencil = new Pencil();
  rect = new RectangleBrush();
@@ -125,6 +149,8 @@ void setup(){
  shapes = new ShapeList();
  line = new LineBrush();
  text = new TextBrush();
+ triangle = new TriangleBrush();
+ arc = new ArcBrush();
  transformation = new Transformation();
  
  activeGroup = new ArrayList<Shape>();
@@ -135,12 +161,12 @@ void setup(){
  save = new SaveCommand();
  load = new LoadCommand();
  
- coords = new CoordinateDisplay();
+ //coords = new CoordinateDisplay();
  textSetter = new TextSetter();
  textSet = "";
  undone = false;
  
- PImage logo = loadImage("ihoc.png");
+ PImage logo = loadImage("NCPaintLogo.png");
  PImage rectImg = loadImage("rec.png");
  PImage triImg = loadImage("tri.png");
  PImage elliImg = loadImage("elli.png");
@@ -161,6 +187,8 @@ void setup(){
 
 
 void draw(){
+  strokeColor = new ColorCommand(rgb);
+  weight = new WeightCommand(stk);
   if(loadCanvas != null && loading == true){
     imageMode(CORNER);
     image(loadCanvas, 0, 0); 
@@ -172,27 +200,44 @@ void draw(){
     loading = false;
   }
   
-  coords.display();
-  noFill();
+  //coords.display();
   
-  if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -45);
-  if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 45);
+  if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
+  if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
+  if(helpButton == 1.0){
+    if(isAdult != 1.0){
+     if(!kidsHelp.isPlaying()) kidsHelp.play();
+     helpButton = 0.0;
+    }
+  }
   if(drawButton == 0.0){
+    strokeColor.execute();
+    weight.execute();
    pencil.paint(); 
   }
   if(drawButton == 0.1){
+   strokeColor.execute();
+   weight.execute();
    rect.paint(); 
   }
   if(drawButton == 0.2){
+    strokeColor.execute();
+    weight.execute();
     ellipse.paint();
   }
   if(drawButton == 0.3){
-   //triangle.paint(); 
+    strokeColor.execute();
+    weight.execute();
+   triangle.paint(); 
   }
   if(drawButton == 0.4){
-   //arc.paint(); 
+    strokeColor.execute();
+    weight.execute();
+    arc.paint(); 
   }
   if(drawButton == 0.5){
+   strokeColor.execute();
+   weight.execute();
    line.paint(); 
   }
   if(drawButton == 0.6){
@@ -200,15 +245,41 @@ void draw(){
    text.paint(); 
   }
   if(drawButton == 0.7){
-    transformation.changeFillColor(2,rgb);
+    transformation.changeFillColor(shapes.getSize()-1,rgb);
+  }
+  if(drawButton == 0.8){
+    strokeColor.execute();
+    weight.execute();
+    if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
+      rect.paintOneClick();
+    }
+    rect.paintNumerically(numX,numY,numW,numH);
+  }
+  if(drawButton == 0.9){
+    strokeColor.execute();
+    weight.execute();
+    if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
+      ellipse.paintOneClick();
+    }
+    ellipse.paintNumerically(numW,numY,numW,numH);
+  }
+  if(drawButton == 1.0){
+    strokeColor.execute();
+    weight.execute();
+     if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
+      line.paintOneClick();
+    }
+    line.paintNumerically(numX,numY,numW,numH);
+  }
+  if(drawButton == 1.1){
+   strokeColor.execute();
+   weight.execute();
+    if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
+      triangle.paintOneClick();
+    }
+   triangle.paintNumerically(numX,numY,numW,numH); 
   }
   
-  if(undoButton == 1.0){
-   if(!undone){
-    undo.execute();
-    undone = true;
-   }
-  }
   if(undoButton == 0.0) undone = false;
   if(redoButton == 1.0){
    undo.undo();
@@ -246,8 +317,6 @@ void draw(){
   if(isAdult == 1.0) {
    rgb = new int[]{cr,cg,cb};
   }
-  strokeColor = new ColorCommand(rgb);
-  strokeColor.execute();
   
   if(!lastAction.equals("")){
     for(Shape s : shapes.getList()){

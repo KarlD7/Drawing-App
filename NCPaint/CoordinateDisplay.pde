@@ -16,6 +16,8 @@ class CoordinateDisplay{
   
   //Constantly called by the draw() function
   public void display(){
+    cleanDisplay();
+    saveFrame("drawnCanvas");
     x = mouseX;
     y = mouseY;
     drawnCanvas = loadImage("drawnCanvas.tif");
@@ -34,7 +36,7 @@ class CoordinateDisplay{
     int tempStroke = g.strokeColor;
     fill(255);
     stroke(255);
-    rect(4, 525, 75, 12);
+    rect(4, 525, 100, 12);
     fill(tempFill);
     stroke(tempStroke);
   }

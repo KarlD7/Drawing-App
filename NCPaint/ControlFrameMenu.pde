@@ -51,7 +51,7 @@ public class ControlFrameMenu extends PApplet {
  }
  
  public void setup(){
-  surface.setLocation(0,0);
+  surface.setLocation(1090,350);
   main = #749399;
   highlight1 = #ffffff;
   highlight2 = #002D5A;
@@ -62,7 +62,7 @@ public class ControlFrameMenu extends PApplet {
   cp5 = new ControlP5(this);
   openedWindow = false;
   
-  image(logo,150,30);
+  image(logo,220,30);
   
   textFont(font);
   fill(highlight2);
@@ -88,7 +88,7 @@ public class ControlFrameMenu extends PApplet {
    if(au.isPressed()){
     if(!openedWindow){
       println("Opening Advanced window...");
-      af = new ControlFrame(parent,450,750,"Advanced Drawing Window",font,true,rectImg,triImg,elliImg,arcImg,lineImg,rectImg2,triImg2,elliImg2,arcImg2,lineImg2,rotL,rotLP,rotR,rotRP);
+      af = new ControlFrame(parent,700,750,"Advanced Drawing Window",font,true,rectImg,triImg,elliImg,arcImg,lineImg,rectImg2,triImg2,elliImg2,arcImg2,lineImg2,rotL,rotLP,rotR,rotRP);
       openedWindow = true;
       au.setValue(1.0);
     }

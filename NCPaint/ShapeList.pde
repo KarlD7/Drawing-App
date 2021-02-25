@@ -60,9 +60,14 @@ class ShapeList{
    activeGroup.add(activeShape);
   }
   
-  //Adds a shape to the current active group - This is going to be the more used function
+  //Adds a shape to the current active group by index- This is going to be the more used function
   public void selectShape(int i){
-   activeGroup.add(shapeList.get(i)); 
+    if(i < shapeList.size()-1)  activeGroup.add(shapeList.get(i)); 
+  }
+  
+  //Adds a shape to the current active group
+  public void selectShape(Shape sh){
+   activeGroup.add(sh); 
   }
   
   //Deselect a specific shape from the current active group
@@ -94,6 +99,11 @@ class ShapeList{
   public Shape last(){
     if(shapeList.size() > 0) return shapeList.get(shapeList.size()-1);
     else return null;
+  }
+  
+  public boolean shapeInList(Shape sh){
+    if(getShapeIndex(sh) >= 0) return true;
+    else return false;
   }
   
   public Shape getShape(int i){
@@ -138,6 +148,12 @@ class ShapeList{
   
   public void clearList(){
     shapeList = new ArrayList<Shape>(); 
+  }
+  
+  public void redrawShapes(){
+   for(Shape s : shapeList){
+    s.redrawShape(); 
+   }
   }
   
   public void iterateShapes(){
