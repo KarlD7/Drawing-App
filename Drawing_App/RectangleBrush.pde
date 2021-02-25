@@ -45,7 +45,6 @@ class RectangleBrush extends ShapeBrush{
   * wd, ht: Width and height, respectively
   */
   public void paintNumerically(int x, int y, int wd, int ht){
-    if(drawing){
       rectMode(CENTER); //Changes first two parameters to center coordinates
       coords.cleanDisplay();
       saveFrame("undoCanvas");
@@ -54,10 +53,8 @@ class RectangleBrush extends ShapeBrush{
       rect(x, y, wd, ht);
       Shape r = new Shape(x, y, wd, ht, "rectangle");
       shapes.addShape(r);
-      drawing = false;
       rectMode(CORNER); //Back to default (Manually drawing uses this mode) - Gonna change this
       lastAction = "draw";
-    }
   }
   
   public void paintOneClick(){

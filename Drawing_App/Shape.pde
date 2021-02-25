@@ -158,7 +158,7 @@ class Shape{
   public void eraseShape(){
       int tempStroke = g.strokeColor;
       stroke(255);
-      strokeWeight(3);
+      strokeWeight(strokeWeight*1.5);
       if(type.equals("rectangle")){
         rect(x-wd/2,y-ht/2,wd,ht);
       }
@@ -184,7 +184,7 @@ class Shape{
         line(x,y,wd,ht);
       }
       stroke(tempStroke);
-      strokeWeight(1);
+      strokeWeight(strokeWeight);
   }
   
   public void redrawShape(){
@@ -315,8 +315,12 @@ class Shape{
     }
   }
   
+  /**
+  * Special functions for images
+  */
   public void redrawImage(){
    if(type.equals("image")){
+     eraseImage();
      if(angle != 0){
           translate(x,y);
           rotate(radians(angle));
@@ -325,6 +329,24 @@ class Shape{
           translate(x*-1,y*-1);
         }
         else if(angle == 0) image(img, x, y, wd, ht);
+   }
+  }
+  
+  public void eraseImage(){
+   if(type.equals("image")){
+     if(angle == 0){
+        int tempStroke = g.strokeColor;
+        stroke(255);
+        rectMode(CENTER);
+        fill(255);
+        rect(x, y, wd, ht);
+        noFill();
+        rectMode(CORNER);
+        stroke(tempStroke);
+        strokeWeight(1);
+     }
+     else if(angle != 0){
+     }
    }
   }
   

@@ -34,6 +34,7 @@ boolean loading = false;
 
 int rgb[] = {0, 0, 0};
 
+int p = 600;
 
 void setup(){
  size(960,540); 
@@ -42,6 +43,8 @@ void setup(){
  textAlign(LEFT,TOP);
  saveFrame("drawnCanvas");
  //fill(255);
+ 
+ 
  
  //rectMode(CENTER);
  //frameRate(120);
@@ -70,7 +73,7 @@ void setup(){
  clear = new ClearCommand();
  save = new SaveCommand();
  load = new LoadCommand();
- weight = new WeightCommand(10);
+ weight = new WeightCommand(30);
  clipArt = new LoadClipArtCommand();
 
  //load.execute();
@@ -101,10 +104,12 @@ void keyPressed(){
      for(int i = 0; i < shapes.getSize(); i++){
        println(i+1, shapes.getShape(i).type);
      }
+     //load.execute();
+     //transformation.translateShape(shapes.getSize()-1, 50, 100);
      //weight.undo();
      //int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
-     weight.execute(30);
+     //weight.execute();
      
      //load.execute();
    }
@@ -120,9 +125,12 @@ void keyPressed(){
      //translate(960/2,540/2);
      //scale(5);
      
-     //load.execute();
-     rect.paintNumerically(600,500,100,300);
-     ellipse.paintNumerically(200,300,100,300);
+     
+     //rect.paintNumerically(p,200,100,300);
+     ellipse.paintNumerically(p,200,100,300);
+     p+=50;
+     println(p);
+     //ellipse.paintNumerically(200,300,100,300);
      //shapes.setActiveShape(shapes.last());
      
      //transformation.changeText(shapes.getSize()-1, "debug");
@@ -165,6 +173,7 @@ void fileSelected(File selection){
       println("Selected: " + selection.getAbsolutePath());
       loadCanvas = loadImage(selection.getAbsolutePath());
       loading = true;
+      //saveFrame("drawnCanvas");
     }
 }
 

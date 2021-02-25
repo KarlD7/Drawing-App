@@ -52,14 +52,12 @@ class Pencil{
   
   public void eraser(){
     if(start){
-      tempCol = g.strokeColor;
-      tempWeight = g.strokeWeight;
-      stroke(255);
-      strokeWeight(8);
       if(mousePressed){
         cleared = false;
         coords.cleanDisplay();
         saveFrame("undoCanvas");
+        tempCol = g.strokeColor;
+        tempWeight = g.strokeWeight;
         start = false;
       }
     }
@@ -68,6 +66,8 @@ class Pencil{
       saveFrame("drawnCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
+      stroke(255);
+      strokeWeight(tempWeight+7);
       line(mouseX, mouseY, pmouseX, pmouseY);
       coords.cleanDisplay();
       saveFrame("drawnCanvas");

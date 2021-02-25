@@ -114,6 +114,9 @@ class Transformation{
             temp.ht += yPix;
           }
           else{
+            if(temp.type.equals("image")){
+             temp.eraseImage(); 
+            }
             temp.x += xPix;
             temp.y += yPix;
           }

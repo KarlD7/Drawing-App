@@ -37,7 +37,6 @@ class LineBrush extends ShapeBrush{
   * a, b: End coordinates of line
   */
   public void paintNumerically(int x, int y, int a, int b){
-    if(drawing){
       coords.cleanDisplay();
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
@@ -47,9 +46,7 @@ class LineBrush extends ShapeBrush{
       saveFrame("drawnCanvas");
       Shape l = new Shape(x, y, a, b, "line");
       shapes.addShape(l);
-      drawing = false;
       lastAction = "draw";
-    }
   }
   
   public void paintOneClick(){
