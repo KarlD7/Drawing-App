@@ -210,8 +210,7 @@ void draw(){
     shapes.addShape(i);
     loading = false;
   }
-  
-  println(helpButton);
+ 
   //coords.display();
   
   if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
