@@ -94,7 +94,7 @@ void folderSelected(File selection){
    }
    else{
      println("Selected: " + selection.getAbsolutePath());
-     drawnCanvas.save(selection.getAbsolutePath());
+     drawnCanvas.save(selection.getAbsolutePath() + ".png");
    }
 }
 
