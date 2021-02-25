@@ -13,11 +13,11 @@ class Pencil{
   public Pencil(){
     try{
       drawnCanvas = loadImage("drawnCanvas.tif");
-     // coords.cleanDisplay();
+      //coords.cleanDisplay();
       background(drawnCanvas);
     }
     catch(Exception e){
-  //    coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
@@ -28,18 +28,18 @@ class Pencil{
     if(start){
       if(mousePressed){
         cleared = false;
-    //    coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("undoCanvas");
         start = false;
       }
     }
     if(mousePressed){
-  //    coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       line(mouseX, mouseY, pmouseX, pmouseY);
-     // coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
     }
     if(!start && !mousePressed){
@@ -54,7 +54,7 @@ class Pencil{
     if(start){
       if(mousePressed){
         cleared = false;
-      //  coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("undoCanvas");
         tempCol = g.strokeColor;
         tempWeight = g.strokeWeight;
@@ -62,18 +62,18 @@ class Pencil{
       }
     }
     if(mousePressed){
-     // coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       stroke(255);
       strokeWeight(tempWeight+7);
       line(mouseX, mouseY, pmouseX, pmouseY);
-     // coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
     }
     if(!start && !mousePressed){
-    //  coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";

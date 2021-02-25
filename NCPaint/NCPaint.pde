@@ -94,7 +94,7 @@ void folderSelected(File selection){
    }
    else{
      println("Selected: " + selection.getAbsolutePath());
-     drawnCanvas.save(selection.getAbsolutePath());
+     drawnCanvas.save(selection.getAbsolutePath() + ".png");
    }
 }
 
@@ -142,7 +142,6 @@ void setup(){
  rgb = new int[]{0,0,0};
  
  kidsHelp = new SoundFile(this,"kidhelpmenu.mp3");
-  //kidsHelp.play(); 
  
  pencil = new Pencil();
  rect = new RectangleBrush();
@@ -193,6 +192,7 @@ void draw(){
     stroke(255,255,255);
     rect(0,680,100,20);
     fill(0,0,0);
+    textSize(13);
     text("X: "+mouseX+"  Y: "+mouseY,0,680);
     fill(255,255,255);
   }
@@ -211,17 +211,20 @@ void draw(){
     loading = false;
   }
   
+  println(helpButton);
   //coords.display();
   
   if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
   if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
-  /*if(helpButton == 1.0){
+  if(helpButton == 1.0){
     if(isAdult != 1.0){
-     if(!kidsHelp.isPlaying()) kidsHelp.play();
-     helpButton = 0.0;
+     if(!kidsHelp.isPlaying()){
+       kidsHelp.play();
+       helpButton = 0.0;
+     }
     }
   }
-  */
+  
   if(drawButton == 0.0){
     strokeColor.execute();
     weight.execute();

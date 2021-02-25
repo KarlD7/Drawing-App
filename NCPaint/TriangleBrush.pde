@@ -21,7 +21,7 @@ class TriangleBrush extends ShapeBrush{
       if(mousePressed){
         noFill();
         cleared = false;
-    //    coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -66,7 +66,7 @@ class TriangleBrush extends ShapeBrush{
           t = new Shape(cx, cy, wd, ht, "triangle", true);
         }
         shapes.addShape(t);
-     //   coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("drawnCanvas");
         start = true;
         lastAction = "draw";
@@ -74,7 +74,7 @@ class TriangleBrush extends ShapeBrush{
   }
   
   public void paintNumerically(int x, int y, int wd, int ht){
-//    coords.cleanDisplay();
+    //coords.cleanDisplay();
     saveFrame("undoCanvas");
     drawnCanvas = loadImage("drawnCanvas.tif");
     background(drawnCanvas);
