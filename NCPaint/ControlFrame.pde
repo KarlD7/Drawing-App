@@ -64,6 +64,7 @@ public class ControlFrame extends PApplet {
   Button sv;
   Button imp;
   Button fillButton;
+  Button helpButton;
   
   void reset(Button b){
    b.setValue(0.0); 
@@ -112,7 +113,9 @@ public class ControlFrame extends PApplet {
    .setFont(font)
    .setSize(100,30)
    .setPosition(10,550)
+   .setValue(0.0)
    .plugTo(parent,"helpButton");
+   helpButton = cp5.get(Button.class,"Help");
   
 //Section for brushes  
   cp5.addButton("Brush")
@@ -719,6 +722,7 @@ public class ControlFrame extends PApplet {
      reset(pB);
      reset(wB);
      reset(rotL);
+     reset(helpButton);
      reset(rotR);
      reset(undoButton);
      reset(cl);
@@ -734,6 +738,7 @@ public class ControlFrame extends PApplet {
      reset(rotL);
      reset(rotR);
      reset(wB);
+     reset(helpButton);
      reset(undoButton);
      reset(cl);
     }
@@ -749,6 +754,7 @@ public class ControlFrame extends PApplet {
      reset(rotR);
      reset(wB);
      reset(undoButton);
+     reset(helpButton);
      reset(cl);
     }
     if(yB.isPressed()){
@@ -761,6 +767,7 @@ public class ControlFrame extends PApplet {
      reset(rotL);
      reset(rotR);
      reset(pB);
+     reset(helpButton);
      reset(wB);
      reset(undoButton);
      reset(cl);
@@ -776,6 +783,7 @@ public class ControlFrame extends PApplet {
      reset(buB);
      reset(pB);
      reset(wB);
+     reset(helpButton);
      reset(undoButton);
      reset(cl);
     }
@@ -788,6 +796,7 @@ public class ControlFrame extends PApplet {
      reset(rB);
      reset(rotL);
      reset(rotR);
+     reset(helpButton);
      reset(pB);
      reset(wB);
      reset(undoButton);
@@ -800,6 +809,7 @@ public class ControlFrame extends PApplet {
      reset(yB);
      reset(gB);
      reset(buB);
+     reset(helpButton);
      reset(rB);
      reset(rotL);
      reset(rotR);
@@ -815,6 +825,7 @@ public class ControlFrame extends PApplet {
      reset(gB);
      reset(rotL);
      reset(rotR);
+     reset(helpButton);
      reset(buB);
      reset(pB);
      reset(rB);
@@ -830,6 +841,7 @@ public class ControlFrame extends PApplet {
       reset(sv);
       reset(redoButton);
       reset(cl);
+      reset(helpButton);
       reset(imp);
       reset(rotL);
       reset(rotR);
@@ -841,19 +853,21 @@ public class ControlFrame extends PApplet {
       reset(cl);
       reset(imp);
       reset(rotL);
+      reset(helpButton);
       reset(rotR);
     }
     if(cl.isPressed()){
       reset(undoButton);
-      reset(redoButton);
       reset(imp);
       reset(sv);
+      reset(helpButton);
       cl.setValue(1.0);
     }
     if(imp.isPressed()){
       reset(undoButton);
       reset(redoButton);
       reset(cl);
+      reset(helpButton);
       reset(sv);
       imp.setValue(1.0);
     }
@@ -862,8 +876,18 @@ public class ControlFrame extends PApplet {
       reset(redoButton);
       reset(cl);
       reset(imp);
+      reset(helpButton);
       sv.setValue(1.0);
     }
+    if(helpButton.isPressed()){
+      helpButton.setValue(1.0);
+      reset(undoButton);
+      reset(redoButton);
+      reset(cl);
+      reset(imp);
+      reset(sv);
+    }
+    
     if(!adult){
       textFont(font);
       if(bkB.getValue() == 0.0) fill(0,0,0);
