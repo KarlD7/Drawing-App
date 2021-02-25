@@ -121,6 +121,23 @@ class Shape{
     this.tempWeight = g.strokeWeight;
   }
   
+  //Rotated images - This is so sloppy but we're rolling with it for now
+  public Shape(int x, int y, int wd, int ht, int angle, String type, PImage img){
+    this.x = x;
+    this.y = y;
+    this.wd = wd;
+    this.ht = ht;
+    this.angle = angle;
+    this.type = type;
+    this.img = img;
+    this.col = g.strokeColor;
+    this.tempCol = g.strokeColor;
+    this.fillCol = g.fillColor;
+    this.tempFill = g.fillColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
+  }
+  
   //Constructor for text
   public Shape(int x, int y, int size, String type, String text){
     this.x = x;
@@ -157,8 +174,10 @@ class Shape{
   
   public void eraseShape(){
       int tempStroke = g.strokeColor;
+      int tempFill = g.fillColor;
       stroke(255);
-      strokeWeight(3);
+      fill(255);
+      strokeWeight(strokeWeight+7);
       if(type.equals("rectangle")){
         rect(x-wd/2,y-ht/2,wd,ht);
       }
@@ -169,11 +188,7 @@ class Shape{
         triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
       }
       else if(type.equals("image")){
-        rectMode(CENTER);
-        fill(255);
-        rect(x, y, wd, ht);
-        noFill();
-        rectMode(CORNER);
+        eraseImage();
       }
       else if(type.equals("text")){
         fill(255);
@@ -184,7 +199,8 @@ class Shape{
         line(x,y,wd,ht);
       }
       stroke(tempStroke);
-      strokeWeight(1);
+      fill(tempFill);
+      strokeWeight(strokeWeight);
   }
   
   public void redrawShape(){
@@ -253,8 +269,10 @@ class Shape{
         }
         else if(angle == 0) curve(cp1X, cp1Y, x, y, endX, endY, cp2X, cp2Y);
       }
-      /*else if(type.equals("image")){
-        if(angle != 0){
+      else if(type.equals("image")){
+        redrawImage();
+      }
+        /*if(angle != 0){
           translate(x,y);
           rotate(radians(angle));
           redrawShapeAtOrigin();
@@ -315,16 +333,46 @@ class Shape{
     }
   }
   
+  /**
+  * Special functions for images
+  */
   public void redrawImage(){
    if(type.equals("image")){
+     eraseImage();
      if(angle != 0){
           translate(x,y);
           rotate(radians(angle));
           redrawShapeAtOrigin();
           rotate(radians(angle*-1));
           translate(x*-1,y*-1);
-        }
-        else if(angle == 0) image(img, x, y, wd, ht);
+     }
+     else if(angle == 0){
+       //println(shapes.getSize(), shapes.last().type);
+       image(img, x, y, wd, ht);
+     }
+   }
+  }
+  
+  public void eraseImage(){
+   if(type.equals("image")){
+     int tempStroke = g.strokeColor;
+     stroke(255);
+     rectMode(CENTER);
+     fill(255);
+     if(angle == 0){
+        rect(x, y, wd, ht);
+     }
+     else if(angle != 0){
+        translate(x,y);
+        rotate(radians(angle));
+        redrawShapeAtOrigin();
+        rotate(radians(angle*-1));
+        translate(x*-1,y*-1);
+     }
+     noFill();
+     rectMode(CORNER);
+     stroke(tempStroke);
+     strokeWeight(1);
    }
   }
   
@@ -333,6 +381,10 @@ class Shape{
   * Useful for removing the current instance of a shape and replacing it with a new modified one
   */
   public Shape duplicateShape(){
+    if(type.equals("image")){
+      Shape ret = new Shape(this.x, this.y, this.wd, this.ht, this.angle, this.type, this.img);
+      return ret;
+    }
     Shape ret = new Shape(this.x, this.y, this.wd, this.ht, this.angle, this.type);
     return ret;
   }

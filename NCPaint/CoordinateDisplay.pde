@@ -6,7 +6,6 @@ class CoordinateDisplay{
   
   private int x;
   private int y;
-  
   String info;
  
   public CoordinateDisplay(){

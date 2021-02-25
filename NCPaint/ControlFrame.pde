@@ -33,6 +33,7 @@ public class ControlFrame extends PApplet {
   Button numElli;
   Button numTri;
   Button numLine;
+  Button erase;
   
   Textfield textFieldArea;
   Textfield textX;
@@ -107,7 +108,7 @@ public class ControlFrame extends PApplet {
   cp5 = new ControlP5(this);
   surface.setLocation(1090,10);
   
-  cp5.addButton("Help*")
+  cp5.addButton("Help")
    .setFont(font)
    .setSize(100,30)
    .setPosition(10,550)
@@ -160,10 +161,17 @@ public class ControlFrame extends PApplet {
     .setPosition(10,220);
   lnButton = cp5.get(Button.class,"Line");
   if(!adult) lnButton.setImages(lineImg,lineImg2,lineImg2);
+  
+  cp5.addButton("Eraser")
+  .setPosition(10,260)
+  .setSize(100,30)
+  .setFont(font)
+  .plugTo(parent,"drawButton");
+  erase = cp5.get(Button.class,"Eraser");
     
   cp5.addButton("Fill Shape")
   .plugTo(parent,"drawButton")
-  .setPosition(10,260)
+  .setPosition(10,300)
   .setSize(150,30)
   .setFont(font)
   .setVisible(adult);
@@ -369,13 +377,13 @@ public class ControlFrame extends PApplet {
   .setVisible(adult);
   numElli = cp5.get(Button.class,"Draw Ellipse");
   
-  cp5.addButton("Draw Triangle*")
+  cp5.addButton("Draw Triangle")
   .setPosition(440,180)
   .setSize(180,30)
   .setFont(font)
   .plugTo(parent,"drawButton")
   .setVisible(adult);
-  numTri = cp5.get(Button.class,"Draw Triangle*");
+  numTri = cp5.get(Button.class,"Draw Triangle");
   
   cp5.addButton("Draw Line")
   .setPosition(440,220)
@@ -386,7 +394,7 @@ public class ControlFrame extends PApplet {
   numLine = cp5.get(Button.class,"Draw Line");
   
   cp5.addButton("RotL")
-  .setPosition(10,300)
+  .setPosition(10,340)
   .plugTo(parent,"rot")
   .setImages(rotLB,rotLP,rotLP)
   .setSize(45,30)
@@ -394,7 +402,7 @@ public class ControlFrame extends PApplet {
   rotL = cp5.get(Button.class,"RotL");
   
   cp5.addButton("RotR")
-  .setPosition(70,300)
+  .setPosition(70,340)
   .plugTo(parent,"rot")
   .setSize(45,30)
   .setImages(rotRB,rotRP,rotRP)
@@ -459,6 +467,7 @@ public class ControlFrame extends PApplet {
      reset(elliButton);
      reset(triButton);
      reset(arcButton);
+     reset(erase);
      reset(lnButton);
      reset(textButton);
      reset(fillButton);
@@ -486,6 +495,7 @@ public class ControlFrame extends PApplet {
      reset(numElli);
      reset(numLine);
      reset(numTri);
+     reset(erase);
      reset(rotL);
      reset(rotR);
     }
@@ -501,6 +511,7 @@ public class ControlFrame extends PApplet {
      reset(undoButton);
      reset(cl);
      reset(numRect);
+     reset(erase);
      reset(numElli);
      reset(numLine);
      reset(numTri);
@@ -519,6 +530,7 @@ public class ControlFrame extends PApplet {
      reset(undoButton);
      reset(cl);
      reset(numRect);
+     reset(erase);
      reset(numElli);
      reset(numLine);
      reset(rotL);
@@ -537,6 +549,7 @@ public class ControlFrame extends PApplet {
      reset(undoButton);
      reset(cl);
      reset(numRect);
+     reset(erase);
      reset(numElli);
      reset(rotL);
      reset(rotR);
@@ -558,6 +571,7 @@ public class ControlFrame extends PApplet {
      reset(rotL);
      reset(rotR);
      reset(numElli);
+     reset(erase);
      reset(numLine);
      reset(numTri);
     }
@@ -565,6 +579,7 @@ public class ControlFrame extends PApplet {
      textButton.setValue(0.6);
      reset(undoButton);
      reset(paintButton);
+     reset(erase);
      reset(rectButton);
      reset(elliButton);
      reset(triButton);
@@ -593,6 +608,7 @@ public class ControlFrame extends PApplet {
      reset(rotR);
      reset(cl);
      reset(numRect);
+     reset(erase);
      reset(numElli);
      reset(numLine);
      reset(numTri);
@@ -608,7 +624,7 @@ public class ControlFrame extends PApplet {
      reset(textButton);
      reset(rotL);
      reset(rotR);
-     
+     reset(erase);
      reset(lnButton);
      reset(cl);
      reset(fillButton);
@@ -629,6 +645,7 @@ public class ControlFrame extends PApplet {
      reset(textButton);
      reset(lnButton);
      reset(cl);
+     reset(erase);
      reset(fillButton);
      reset(numRect);
      reset(numLine);
@@ -649,6 +666,7 @@ public class ControlFrame extends PApplet {
      reset(numElli);
      reset(rotL);
      reset(rotR);
+     reset(erase);
      reset(numRect);
      reset(numTri);
     }
@@ -668,7 +686,27 @@ public class ControlFrame extends PApplet {
      reset(rotL);
      reset(rotR);
      reset(numRect);
+     reset(erase);
      reset(numLine);
+    }
+    if(erase.isPressed()){
+     erase.setValue(1.2);
+     reset(rectButton);
+     reset(elliButton);
+     reset(triButton);
+     reset(arcButton);
+     reset(paintButton);
+     reset(lnButton);
+     reset(textButton);
+     reset(fillButton);
+     reset(undoButton);
+     reset(cl);
+     reset(numRect);
+     reset(numElli);
+     reset(numLine);
+     reset(numTri);
+     reset(rotL);
+     reset(rotR);
     }
     
     if(bkB.isPressed()){

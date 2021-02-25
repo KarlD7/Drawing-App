@@ -16,7 +16,7 @@ class Transformation{
   */
   //Need to add condition for lines and images and curves
   public void rotateShape(int i, int angle){
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -41,7 +41,7 @@ class Transformation{
         //Putting the canvas back to where it was
         rotate(radians(angle*-1));
         translate(temp.x*-1,temp.y*-1);
-        //coords.cleanDisplay();
+     //   coords.cleanDisplay();
         saveFrame("drawnCanvas");
         lastAction = "transformation";
       }
@@ -59,7 +59,7 @@ class Transformation{
   * ht: amount to increase the end y-coordinate of the line by
   */
   public void resizeShape(int i, int wd, int ht){
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("undoCanvas");
     Shape temp = shapes.getShape(i);
     if(temp != null){
@@ -69,8 +69,9 @@ class Transformation{
      temp.wd += wd;
      temp.ht += ht;
      temp.redrawShape();
+     if(temp.type.equals("image")) temp.redrawImage();
      shapes.addShape(temp);
-     //coords.cleanDisplay();
+  //   coords.cleanDisplay();
      saveFrame("drawnCanvas");
      lastAction = "transformation";
     }
@@ -82,7 +83,7 @@ class Transformation{
   * Only works on shapes of type text
   */
   public void resizeShape(int i, int size){
-    //coords.cleanDisplay();
+   // coords.cleanDisplay();
     saveFrame("undoCanvas");
     Shape temp = shapes.getShape(i);
     if(temp != null && temp.type.equals("text")){
@@ -90,7 +91,7 @@ class Transformation{
       shapes.removeShape(i);
       Shape t = new Shape(temp.x, temp.y, size, temp.type, temp.text);
       shapes.addShape(t);
-      //coords.cleanDisplay();
+   //   coords.cleanDisplay();
       saveFrame("drawnCanvas");
       lastAction = "transformation";
     }
@@ -102,7 +103,7 @@ class Transformation{
   * yPix: amount of pixels to translate horizontally. Positive values for down, negative for up.
   */
   public void translateShape(int i, int xPix, int yPix){
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -114,13 +115,16 @@ class Transformation{
             temp.ht += yPix;
           }
           else{
+            if(temp.type.equals("image")){
+             temp.eraseImage(); 
+            }
             temp.x += xPix;
             temp.y += yPix;
           }
           if(temp.type.equals("image")){
             temp.redrawImage();
           }
-          //coords.cleanDisplay();
+     //     coords.cleanDisplay();
           saveFrame("drawnCanvas");
           lastAction = "transformation";
         }
@@ -133,7 +137,7 @@ class Transformation{
   * If text, changes the font color
   */
   public void changeColor(int i, int[] rgb){
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -141,7 +145,7 @@ class Transformation{
         temp.setColor(rgb);
       }
     }
-    //coords.cleanDisplay();
+   // coords.cleanDisplay();
     saveFrame("drawnCanvas");
     lastAction = "transformation";
   }
@@ -150,7 +154,7 @@ class Transformation{
   * Changes the fill color of shapes. For text use changeColor(...)
   */
   public void changeFillColor(int i, int[] rgb){
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -158,7 +162,7 @@ class Transformation{
         temp.setFillColor(rgb);
       }
     }
-    //coords.cleanDisplay();
+  //  coords.cleanDisplay();
     saveFrame("drawnCanvas");
     lastAction = "transformation";
   }
@@ -167,7 +171,7 @@ class Transformation{
   * Clears the fill color of a shape, making it noFill
   */
   public void clearFill(int i){
-    //coords.cleanDisplay();
+//    coords.cleanDisplay();
    saveFrame("undoCanvas");
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
@@ -175,7 +179,7 @@ class Transformation{
         temp.clearFillColor();
       }
     }
-    //coords.cleanDisplay();
+ //   coords.cleanDisplay();
     saveFrame("drawnCanvas");
     lastAction = "transformation";
   }
@@ -184,14 +188,14 @@ class Transformation{
   * Changes the text of a text shape
   */
   public void changeText(int i, String text){
-    //coords.cleanDisplay();
+ //   coords.cleanDisplay();
    saveFrame("undoCanvas");
    if(i < shapes.getSize() && i >= 0){
     Shape temp = shapes.getShape(i);
     if(temp != null){
       lastRemoved = temp.duplicateShape();
       shapes.removeShape(i);
-      //coords.cleanDisplay();
+  //    coords.cleanDisplay();
       saveFrame("drawnCanvas");
       Shape t = new Shape(temp.x, temp.y, temp.size, temp.type, text);
       shapes.addShape(t);

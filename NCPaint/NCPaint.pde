@@ -141,7 +141,8 @@ void setup(){
  stk = 1;
  rgb = new int[]{0,0,0};
  
- kidsHelp = new SoundFile(this,"help");
+ kidsHelp = new SoundFile(this,"kidhelpmenu.mp3");
+  //kidsHelp.play(); 
  
  pencil = new Pencil();
  rect = new RectangleBrush();
@@ -187,8 +188,18 @@ void setup(){
 
 
 void draw(){
+  if(isAdult == 1.0){
+    fill(255,255,255);
+    stroke(255,255,255);
+    rect(0,680,100,20);
+    fill(0,0,0);
+    text("X: "+mouseX+"  Y: "+mouseY,0,680);
+    fill(255,255,255);
+  }
   strokeColor = new ColorCommand(rgb);
   weight = new WeightCommand(stk);
+  strokeColor.execute();
+  weight.execute();
   if(loadCanvas != null && loading == true){
     imageMode(CORNER);
     image(loadCanvas, 0, 0); 
@@ -204,12 +215,13 @@ void draw(){
   
   if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
   if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
-  if(helpButton == 1.0){
+  /*if(helpButton == 1.0){
     if(isAdult != 1.0){
      if(!kidsHelp.isPlaying()) kidsHelp.play();
      helpButton = 0.0;
     }
   }
+  */
   if(drawButton == 0.0){
     strokeColor.execute();
     weight.execute();
@@ -242,6 +254,7 @@ void draw(){
   }
   if(drawButton == 0.6){
    textSetter.setText(textSet);
+   textSetter.setSize(stk);
    text.paint(); 
   }
   if(drawButton == 0.7){
@@ -253,7 +266,7 @@ void draw(){
     if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
       rect.paintOneClick();
     }
-    rect.paintNumerically(numX,numY,numW,numH);
+    else rect.paintNumerically(numX,numY,numW,numH);
   }
   if(drawButton == 0.9){
     strokeColor.execute();
@@ -261,14 +274,11 @@ void draw(){
     if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
       ellipse.paintOneClick();
     }
-    ellipse.paintNumerically(numW,numY,numW,numH);
+    else ellipse.paintNumerically(numW,numY,numW,numH);
   }
   if(drawButton == 1.0){
     strokeColor.execute();
     weight.execute();
-     if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
-      line.paintOneClick();
-    }
     line.paintNumerically(numX,numY,numW,numH);
   }
   if(drawButton == 1.1){
@@ -277,10 +287,17 @@ void draw(){
     if(numX == 0 && numY == 0 && numW == 0 && numH == 0){
       triangle.paintOneClick();
     }
-   triangle.paintNumerically(numX,numY,numW,numH); 
+   else triangle.paintNumerically(numX,numY,numW,numH); 
+  }
+  if(drawButton == 1.2){
+    pencil.eraser();
   }
   
   if(undoButton == 0.0) undone = false;
+  if(undoButton == 1.0 && !undone){
+   undo.execute();
+   undone = true;
+  }
   if(redoButton == 1.0){
    undo.undo();
    clear.undo();
@@ -290,6 +307,9 @@ void draw(){
   }
   if(saveButton == 1.0){
     if(!saved){
+     fill(255,255,255);
+     stroke(255,255,255);
+     rect(0,680,100,20);
      save.execute();
      saved = true;
     }
@@ -323,5 +343,4 @@ void draw(){
       if(s != null) s.redrawShape(); 
     }
   }
-  
 }

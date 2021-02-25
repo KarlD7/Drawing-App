@@ -40,7 +40,6 @@ class EllipseBrush extends ShapeBrush{
   * wd, ht: Width and height, respectively
   */
   public void paintNumerically(int x, int y, int wd, int ht){
-    if(drawing){
       //coords.cleanDisplay();
       saveFrame("undoCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
@@ -51,9 +50,7 @@ class EllipseBrush extends ShapeBrush{
       saveFrame("drawnCanvas");
       Shape e = new Shape(x,y,wd,ht, "ellipse");
       shapes.addShape(e);
-      drawing = false;
       lastAction = "draw";
-    }
   }
   
   public void paintOneClick(){
