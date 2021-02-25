@@ -104,8 +104,9 @@ void keyPressed(){
      //weight.undo();
      //int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
+     weight.execute(30);
      
-     load.execute();
+     //load.execute();
    }
    if(keyCode == RIGHT){
      //shapes.selectShape(2);
@@ -120,7 +121,8 @@ void keyPressed(){
      //scale(5);
      
      //load.execute();
-     //rect.paintNumerically(600,500,100,300);
+     rect.paintNumerically(600,500,100,300);
+     ellipse.paintNumerically(200,300,100,300);
      //shapes.setActiveShape(shapes.last());
      
      //transformation.changeText(shapes.getSize()-1, "debug");
@@ -130,7 +132,7 @@ void keyPressed(){
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //transformation.clearFill(shapes.getSize()-1);
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
-     transformation.rotateShape(shapes.getSize()-1, 45);
+     //transformation.rotateShape(shapes.getSize()-1, 45);
      
      //Shapes
      //transformation.resizeShape(shapes.getSize()-1,200,200);
@@ -227,7 +229,9 @@ void draw(){
   //cvk.executeCommand();
   //cvk.undoCommand();
   
-  pencil.paint();
+  //pencil.paint();
+  //pencil.eraser();
+  
   //rect.paintNumerically(600,500,100,300);
   //rect(100,200,100,300);
   //translate(50,50);
