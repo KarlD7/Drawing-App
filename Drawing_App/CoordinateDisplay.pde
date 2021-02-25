@@ -16,6 +16,8 @@ class CoordinateDisplay{
   
   //Constantly called by the draw() function
   public void display(){
+    cleanDisplay();
+    saveFrame("drawnCanvas");
     x = mouseX;
     y = mouseY;
     drawnCanvas = loadImage("drawnCanvas.tif");

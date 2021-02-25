@@ -107,16 +107,19 @@ class Transformation{
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
       if(temp != null){
-          lastRemoved = temp.duplicateShape();
-          shapes.removeShape(i);
-          Shape r;
           if(temp.type.equals("line")){
-            r = new Shape(temp.x+xPix, temp.y+yPix, temp.wd+xPix, temp.ht+yPix, temp.type);
+            temp.x += xPix;
+            temp.y += yPix;
+            temp.wd += xPix;
+            temp.ht += yPix;
           }
           else{
-            r = new Shape(temp.x+xPix, temp.y+yPix, temp.wd, temp.ht, temp.type);
+            temp.x += xPix;
+            temp.y += yPix;
           }
-          shapes.addShape(r);
+          if(temp.type.equals("image")){
+            temp.redrawImage();
+          }
           coords.cleanDisplay();
           saveFrame("drawnCanvas");
           lastAction = "transformation";
@@ -196,69 +199,4 @@ class Transformation{
     }
    }
   }
-    
-    
-  
-  //The old stupid way
-  /*public void translateShape(int i, int pix, String dir){
-    saveFrame("undoCanvas");
-    if(i < shapes.getSize() && i >= 0){
-      Shape temp = shapes.getShape(i);
-      shapes.removeShape(i);
-      if(temp != null){
-        if(temp.type.equals("rectangle")){
-          if(dir.equals("left")){
-            rect((temp.x-temp.wd/2)-pix,temp.y-temp.ht/2,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape r = new Shape(temp.x-pix,temp.y,temp.wd,temp.ht, "rectangle");
-            shapes.addShape(r);
-          }
-          else if(dir.equals("right")){
-            rect((temp.x-temp.wd/2)+pix,temp.y-temp.ht/2,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape r = new Shape(temp.x+pix,temp.y,temp.wd,temp.ht, "rectangle");
-            shapes.addShape(r);
-          }
-          else if(dir.equals("up")){
-            rect(temp.x-temp.wd/2,(temp.y-temp.ht/2)-pix,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape r = new Shape(temp.x,temp.y-pix,temp.wd,temp.ht, "rectangle");
-            shapes.addShape(r);
-          }
-          else if(dir.equals("down")){
-            rect(temp.x-temp.wd/2,(temp.y-temp.ht/2)+pix,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape r = new Shape(temp.x,temp.y+pix,temp.wd,temp.ht, "rectangle");
-            shapes.addShape(r);
-          }
-        }
-        else if(temp.type.equals("ellipse")){
-          if(dir.equals("left")){
-            ellipse(temp.x-pix,temp.y,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape e = new Shape(temp.x-pix,temp.y,temp.wd,temp.ht, "ellipse");
-            shapes.addShape(e);
-          }
-          if(dir.equals("right")){
-            ellipse(temp.x+pix,temp.y,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape e = new Shape(temp.x+pix,temp.y,temp.wd,temp.ht, "ellipse");
-            shapes.addShape(e);
-          }
-          if(dir.equals("up")){
-            ellipse(temp.x,temp.y-pix,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape e = new Shape(temp.x,temp.y-pix,temp.wd,temp.ht, "ellipse");
-            shapes.addShape(e);
-          }
-          if(dir.equals("down")){
-            ellipse(temp.x,temp.y+pix,temp.wd,temp.ht);
-            saveFrame("drawnCanvas");
-            Shape e = new Shape(temp.x,temp.y+pix,temp.wd,temp.ht, "ellipse");
-            shapes.addShape(e);
-          }
-        }
-      }
-    }
-  }*/
 }

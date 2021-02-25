@@ -12,6 +12,10 @@ class Shape{
   private int wd;
   private int ht;
   
+  //Stroke size
+  private float strokeWeight;
+  private float tempWeight;
+  
   //Stroke Color
   private int[] rgb;
   //Redraw color
@@ -41,13 +45,16 @@ class Shape{
   private String text = textSetter.getText();
   private int size = textSetter.getSize();
   
-  //
+  //Values for arcs
   private int endX;
   private int endY;
   private int cp1X;
   private int cp1Y;
   private int cp2X;
   private int cp2Y;
+  
+  //If the shape is an upside-down triangle
+  private boolean triUpsideDown;
   
   public Shape(int x, int y, int wd, int ht, String type){
     this.x = x;
@@ -60,8 +67,11 @@ class Shape{
     this.tempCol = g.strokeColor;
     this.fillCol = g.fillColor;
     this.tempFill = g.fillColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
   }
   
+  //Rotated shapes
   public Shape(int x, int y, int wd, int ht, int angle, String type){
     this.x = x;
     this.y = y;
@@ -73,9 +83,28 @@ class Shape{
     this.tempCol = g.strokeColor;
     this.fillCol = g.fillColor;
     this.tempFill = g.fillColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
   }
   
-  //Constructor for images
+  //Constructor for triangles - Gotta have a different one because triangles aren't horizontally symmetrical so it will redraw it wrong
+  public Shape(int x, int y, int wd, int ht, String type, boolean upsideDown){
+    this.x = x;
+    this.y = y;
+    this.wd = wd;
+    this.ht = ht;
+    this.angle = 0;
+    this.type = type;
+    this.col = g.strokeColor;
+    this.tempCol = g.strokeColor;
+    this.fillCol = g.fillColor;
+    this.tempFill = g.fillColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
+    this.triUpsideDown = upsideDown;
+  }
+  
+  //Constructor for images - For some reason the color fields need to be included here I don't know why but this is what makes it work
   public Shape(int x, int y, int wd, int ht, String type, PImage img){
     this.x = x;
     this.y = y;
@@ -84,6 +113,12 @@ class Shape{
     this.angle = 0;
     this.type = type;
     this.img = img;
+    this.col = g.strokeColor;
+    this.tempCol = g.strokeColor;
+    this.fillCol = g.fillColor;
+    this.tempFill = g.fillColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
   }
   
   //Constructor for text
@@ -112,6 +147,8 @@ class Shape{
     this.angle = 0;
     this.col = g.strokeColor;
     this.tempCol = g.strokeColor;
+    this.strokeWeight = g.strokeWeight;
+    this.tempWeight = g.strokeWeight;
   }
   
   //Empty shape
@@ -159,6 +196,7 @@ class Shape{
         fill(fillCol);
       }
     }
+      strokeWeight(strokeWeight);
       stroke(col);
       if(type.equals("rectangle")){
         rectMode(CENTER);
@@ -190,7 +228,10 @@ class Shape{
           rotate(radians(angle*-1));
           translate(x*-1,y*-1);
         }
-        else if(angle == 0) triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
+        else if(angle == 0){
+          if(triUpsideDown)  triangle(x-wd,y-(ht/2),x,y+(ht/2),x+wd,y-ht/2);
+          else if(!triUpsideDown)  triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
+        }
       }
       else if(type.equals("line")){
          if(angle != 0){
@@ -212,7 +253,7 @@ class Shape{
         }
         else if(angle == 0) curve(cp1X, cp1Y, x, y, endX, endY, cp2X, cp2Y);
       }
-      else if(type.equals("image")){
+      /*else if(type.equals("image")){
         if(angle != 0){
           translate(x,y);
           rotate(radians(angle));
@@ -221,7 +262,7 @@ class Shape{
           translate(x*-1,y*-1);
         }
         else if(angle == 0) image(img, x, y, wd, ht);
-      }
+      }*/
       //Text shapes use fill for font color
       else if(type.equals("text")){
         fill(col);
@@ -238,8 +279,8 @@ class Shape{
         else if(angle == 0) text(text, x, y);
         fill(tempCol);
       }
-      
       stroke(tempCol);
+      strokeWeight(tempWeight);
 
       if(!type.equals("text")){
         fill(tempFill);
@@ -272,6 +313,19 @@ class Shape{
     else if(type.equals("text")){
         text(text, 0, 0); 
     }
+  }
+  
+  public void redrawImage(){
+   if(type.equals("image")){
+     if(angle != 0){
+          translate(x,y);
+          rotate(radians(angle));
+          redrawShapeAtOrigin();
+          rotate(radians(angle*-1));
+          translate(x*-1,y*-1);
+        }
+        else if(angle == 0) image(img, x, y, wd, ht);
+   }
   }
   
   /**

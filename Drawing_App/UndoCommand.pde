@@ -10,6 +10,7 @@ public class UndoCommand implements Command{
   public UndoCommand(){
   }
   
+  //Undo
   @Override
   public void execute(){
     try{
@@ -44,6 +45,7 @@ public class UndoCommand implements Command{
     }
   }
   
+  //Redo
   @Override
   public void undo(){
     if(undone){

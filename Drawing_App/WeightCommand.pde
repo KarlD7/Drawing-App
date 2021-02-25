@@ -4,8 +4,8 @@
 
 public class WeightCommand implements Command{
   
-  private int newWeight = 1;
-  private int prevWeight;
+  private float newWeight = 1;
+  private float prevWeight;
  
   public WeightCommand(int w){
     this.prevWeight = newWeight;

@@ -1,10 +1,16 @@
 class TriangleBrush extends ShapeBrush{
   
+  //Width and Height
   private int wd;
   private int ht;
   
+  //3rd point coordinates
   private int v3X;
   private int v3Y;
+  
+  //Center coordinates
+  private int cy;
+  private int cx;
   
   public TriangleBrush(){
     super();
@@ -44,10 +50,21 @@ class TriangleBrush extends ShapeBrush{
         triangle(v3X, v3Y, startX, startY, endX, endY);
     }
     if(!start && !mousePressed){
-        int cx = startX;
-        int cy = startY + (ht/2);
-        println( cx, cy );
-        Shape t = new Shape(cx, cy, wd, ht, "triangle");
+        cx = startX;
+        if(endY > startY){
+          cy = startY + (ht/2);
+        }
+        else{
+          cy = startY - (ht/2);
+        }
+        println(cx, cy);
+        Shape t;
+        if(endY > startY){
+          t = new Shape(cx, cy, wd, ht, "triangle", false);
+        }
+        else{
+          t = new Shape(cx, cy, wd, ht, "triangle", true);
+        }
         shapes.addShape(t);
         coords.cleanDisplay();
         saveFrame("drawnCanvas");

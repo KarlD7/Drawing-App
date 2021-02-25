@@ -24,6 +24,7 @@ Command clear;
 Command save;
 Command load;
 Command weight;
+Command clipArt;
 
 Transformation transformation;
 
@@ -61,6 +62,7 @@ void setup(){
  transformation = new Transformation();
  
  activeGroup = new ArrayList<Shape>();
+ //lastRemoved = new ArrayList<Shape>();
  
  cvk = new CommandInvoker();
  strokeColor = new ColorCommand(rgb);
@@ -69,8 +71,10 @@ void setup(){
  save = new SaveCommand();
  load = new LoadCommand();
  weight = new WeightCommand(10);
+ clipArt = new LoadClipArtCommand();
 
  //load.execute();
+ //clipArt.execute();
  
  strokeColor.execute();
 }
@@ -92,15 +96,22 @@ void keyPressed(){
    }
    if(keyCode == LEFT){
      //shapes.iterateShapes();
-     println(shapes.getSize());
-     /*for(int i = 0; i < shapes.getSize(); i++){
+     
+     println("Shapes: " + shapes.getSize());
+     for(int i = 0; i < shapes.getSize(); i++){
        println(i+1, shapes.getShape(i).type);
-     }*/
+     }
      //weight.undo();
      //int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
+     
+     load.execute();
    }
    if(keyCode == RIGHT){
+     //shapes.selectShape(2);
+     //shapes.selectShape(4);
+     ///shapes.selectShape(5);
+     
      //weight.execute();
      //textSetter.setText("Hello world");
      //text.paint();
@@ -119,13 +130,13 @@ void keyPressed(){
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //transformation.clearFill(shapes.getSize()-1);
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
-     //transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 45);
+     transformation.rotateShape(shapes.getSize()-1, 45);
      
      //Shapes
      //transformation.resizeShape(shapes.getSize()-1,200,200);
      
      //Text
-     //transformation.resizeShape(shapes.getSize()-1, 32);
+     //transformation.resizeShape(activeGroup, 32);
      
      //shapes.removeShape(0);
      
@@ -165,12 +176,26 @@ void folderSelected(File selection){
    }
 }
 
+void folderSelectedClipArt(File selection){
+    if(selection == null){
+       println("Cancelled.");
+    }
+    else{
+      println("Selected: " + selection.getAbsolutePath());
+      loadCanvas = loadImage(selection.getAbsolutePath());
+      loading = true;
+    }
+}
+
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
   coords.display();
   noFill();
 
   if(loadCanvas != null && loading == true){
+    println(g.strokeColor, g.strokeWeight);
+    int tempCol = g.strokeColor;
+    float tempW = g.strokeWeight;
     imageMode(CORNER);
     image(loadCanvas, 0, 0); 
     imageMode(CENTER);
@@ -179,6 +204,8 @@ void draw(){
     Shape i = new Shape(0+wd/2, 0+ht/2, wd, ht, "image", loadCanvas);
     shapes.addShape(i);
     loading = false;
+    strokeWeight(1);
+    stroke(255,0,0);
   }
   
   //arc.paint();

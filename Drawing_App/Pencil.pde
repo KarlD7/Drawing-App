@@ -1,5 +1,7 @@
 /**
 * Freehand drawing tool
+*
+* Pencil strokes are not considered shapes
 */
 
 class Pencil{
@@ -29,6 +31,8 @@ class Pencil{
       }
     }
     if(mousePressed){
+      coords.cleanDisplay();
+      saveFrame("drawnCanvas");
       drawnCanvas = loadImage("drawnCanvas.tif");
       background(drawnCanvas);
       line(mouseX, mouseY, pmouseX, pmouseY);
@@ -40,6 +44,7 @@ class Pencil{
       saveFrame("drawnCanvas");
       start = true;
       lastAction = "draw";
+      //println(g.strokeColor, g.strokeWeight);
     }
   }
 }
