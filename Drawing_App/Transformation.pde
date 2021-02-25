@@ -69,6 +69,7 @@ class Transformation{
      temp.wd += wd;
      temp.ht += ht;
      temp.redrawShape();
+     if(temp.type.equals("image")) temp.redrawImage();
      shapes.addShape(temp);
      coords.cleanDisplay();
      saveFrame("drawnCanvas");

@@ -19,6 +19,7 @@ class ShapeList{
   //Adds a shape to the desired index of the list
   public void addShape(int i, Shape sh){
    shapeList.add(i, sh); 
+   if(sh.type.equals("image")) sh.redrawImage();
   }
   
   //Adds a list of shapes to the end of the list

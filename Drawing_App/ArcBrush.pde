@@ -91,7 +91,7 @@ class ArcBrush extends ShapeBrush{
   }
   
   public void paintNumerically(int x, int y, int ht, int wd){
-    
+    //
   }
   
   public void paintOneClick(){

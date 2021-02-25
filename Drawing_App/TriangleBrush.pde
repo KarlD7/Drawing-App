@@ -74,7 +74,14 @@ class TriangleBrush extends ShapeBrush{
   }
   
   public void paintNumerically(int x, int y, int wd, int ht){
-    
+    coords.cleanDisplay();
+    saveFrame("undoCanvas");
+    drawnCanvas = loadImage("drawnCanvas.tif");
+    background(drawnCanvas);
+    triangle(x-wd,y+(ht/2),x,y-(ht/2),x+wd,y+ht/2);
+    Shape t = new Shape(x, y, wd, ht, "triangle");
+    shapes.addShape(t);
+    lastAction = "draw";
   }
   
   public void paintOneClick(){

@@ -34,7 +34,6 @@ boolean loading = false;
 
 int rgb[] = {0, 0, 0};
 
-int p = 600;
 
 void setup(){
  size(960,540); 
@@ -101,9 +100,9 @@ void keyPressed(){
      //shapes.iterateShapes();
      
      println("Shapes: " + shapes.getSize());
-     for(int i = 0; i < shapes.getSize(); i++){
+     /*for(int i = 0; i < shapes.getSize(); i++){
        println(i+1, shapes.getShape(i).type);
-     }
+     }*/
      //load.execute();
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
      //weight.undo();
@@ -111,7 +110,7 @@ void keyPressed(){
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //weight.execute();
      
-     //load.execute();
+     load.execute();
    }
    if(keyCode == RIGHT){
      //shapes.selectShape(2);
@@ -127,20 +126,19 @@ void keyPressed(){
      
      
      //rect.paintNumerically(p,200,100,300);
-     ellipse.paintNumerically(p,200,100,300);
-     p+=50;
-     println(p);
+     //ellipse.paintNumerically(p,200,100,300);
+     //triangle.paintNumerically(p,200,100,300);
      //ellipse.paintNumerically(200,300,100,300);
      //shapes.setActiveShape(shapes.last());
      
      //transformation.changeText(shapes.getSize()-1, "debug");
      
      int[] newColor = {0,255,0};
-     //transformation.changeColor(shapes.getSize()-1, newColor);
-     //transformation.changeFillColor(shapes.getSize()-1, newColor);
+     transformation.changeColor(shapes.getSize()-1, newColor);
+     transformation.changeFillColor(shapes.getSize()-1, newColor);
      //transformation.clearFill(shapes.getSize()-1);
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
-     //transformation.rotateShape(shapes.getSize()-1, 45);
+     transformation.rotateShape(shapes.getSize()-1, 45);
      
      //Shapes
      //transformation.resizeShape(shapes.getSize()-1,200,200);
@@ -200,11 +198,12 @@ void folderSelectedClipArt(File selection){
 
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
-  coords.display();
+  //coords.display();
   noFill();
 
   if(loadCanvas != null && loading == true){
-    println(g.strokeColor, g.strokeWeight);
+    //println(g.strokeColor, g.strokeWeight);
+    saveFrame("drawnCanvas");
     int tempCol = g.strokeColor;
     float tempW = g.strokeWeight;
     imageMode(CORNER);
@@ -212,18 +211,20 @@ void draw(){
     imageMode(CENTER);
     int wd = loadCanvas.width;
     int ht = loadCanvas.height;
-    Shape i = new Shape(0+wd/2, 0+ht/2, wd, ht, "image", loadCanvas);
+    println(wd, ht);
+    Shape i = new Shape(wd/2, ht/2, wd, ht, "image", loadCanvas);
     shapes.addShape(i);
+    saveFrame("drawnCanvas");
     loading = false;
-    strokeWeight(1);
-    stroke(255,0,0);
+    strokeWeight(tempW);
+    stroke(tempCol);
   }
   
   //arc.paint();
   //triangle.paint();
   
   //DEMO - Color
-  //rect.paint();
+  rect.paint();
   //text.paint();
   //line.paint();
   

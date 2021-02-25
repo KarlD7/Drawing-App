@@ -35,6 +35,7 @@ class TextBrush extends ShapeBrush{
  
   @Override
   public void paintNumerically(int x, int y, int wd, int ht){
+    //
   }
   
   public void paintOneClick(){
