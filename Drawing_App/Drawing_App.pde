@@ -73,7 +73,6 @@ void setup(){
  save = new SaveCommand();
  load = new LoadCommand();
  weight = new WeightCommand(30);
- clipArt = new LoadClipArtCommand();
 
  //load.execute();
  //clipArt.execute();
@@ -111,7 +110,7 @@ void keyPressed(){
      //weight.execute();
      
      //load.execute();
-     save.execute();
+     //save.execute();
      
      //rect.paintNumerically(400,200,100,300);
      //transformation.changeColor(shapes.getSize()-1, newColor);
@@ -190,17 +189,6 @@ void folderSelected(File selection){
    }
 }
 
-void folderSelectedClipArt(File selection){
-    if(selection == null){
-       println("Cancelled.");
-    }
-    else{
-      println("Selected: " + selection.getAbsolutePath());
-      loadCanvas = loadImage(selection.getAbsolutePath());
-      loading = true;
-    }
-}
-
 //Currently, just comment and uncomment the methods here to test the classes.
 void draw(){
   //coords.display();
@@ -225,7 +213,7 @@ void draw(){
     stroke(tempCol);
   }
   
-  //arc.paint();
+  arc.paint();
   //triangle.paint();
   
   //DEMO - Color
@@ -244,7 +232,7 @@ void draw(){
   //cvk.executeCommand();
   //cvk.undoCommand();
   
-  pencil.paint();
+  //pencil.paint();
   //pencil.eraser();
   
   //rect.paintNumerically(600,500,100,300);

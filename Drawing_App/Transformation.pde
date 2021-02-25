@@ -24,7 +24,6 @@ class Transformation{
         lastRemoved = temp.duplicateShape();
         shapes.removeShape(i);
         temp.setAngle(angle);
-        println(temp.angle);
         //Making it easier to rotate about the center of the shape, the order of the following functions is important
         translate(temp.x,temp.y);
         rotate(radians(angle));

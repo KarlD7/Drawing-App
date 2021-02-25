@@ -177,7 +177,7 @@ class Shape{
       int tempFill = g.fillColor;
       stroke(255);
       fill(255);
-      strokeWeight(strokeWeight+7);
+      strokeWeight(tempStroke + 7);
       if(type.equals("rectangle")){
         rect(x-wd/2,y-ht/2,wd,ht);
       }
@@ -270,7 +270,7 @@ class Shape{
         else if(angle == 0) curve(cp1X, cp1Y, x, y, endX, endY, cp2X, cp2Y);
       }
       else if(type.equals("image")){
-        //redrawImage();
+        redrawImage();
       }
         /*if(angle != 0){
           translate(x,y);
