@@ -9,7 +9,7 @@ PImage drawnCanvas;
 PImage undoCanvas;
 PImage loadCanvas;
 ShapeList shapes;
-CoordinateDisplay coords;
+//CoordinateDisplay coords;
 TextSetter textSetter;
 
 Shape activeShape;
@@ -48,7 +48,7 @@ void setup(){
  //rectMode(CENTER);
  //frameRate(120);
  
- coords = new CoordinateDisplay();
+ //coords = new CoordinateDisplay();
  textSetter = new TextSetter();
  
  pencil = new Pencil();
@@ -106,11 +106,16 @@ void keyPressed(){
      //load.execute();
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
      //weight.undo();
-     //int[] newColor = {0,255,0};
+     int[] newColor = {0,255,0};
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //weight.execute();
      
-     load.execute();
+     //load.execute();
+     save.execute();
+     
+     //rect.paintNumerically(400,200,100,300);
+     //transformation.changeColor(shapes.getSize()-1, newColor);
+     //transformation.changeFillColor(shapes.getSize()-1, newColor);
    }
    if(keyCode == RIGHT){
      //shapes.selectShape(2);
@@ -134,8 +139,8 @@ void keyPressed(){
      //transformation.changeText(shapes.getSize()-1, "debug");
      
      int[] newColor = {0,255,0};
-     transformation.changeColor(shapes.getSize()-1, newColor);
-     transformation.changeFillColor(shapes.getSize()-1, newColor);
+     //transformation.changeColor(shapes.getSize()-1, newColor);
+     //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //transformation.clearFill(shapes.getSize()-1);
      //transformation.translateShape(shapes.getSize()-1, 50, 100);
      transformation.rotateShape(shapes.getSize()-1, 45);
@@ -181,7 +186,7 @@ void folderSelected(File selection){
    }
    else{
      println("Selected: " + selection.getAbsolutePath());
-     drawnCanvas.save(selection.getAbsolutePath());
+     drawnCanvas.save(selection.getAbsolutePath() + ".png");
    }
 }
 
@@ -224,7 +229,7 @@ void draw(){
   //triangle.paint();
   
   //DEMO - Color
-  rect.paint();
+  //rect.paint();
   //text.paint();
   //line.paint();
   
@@ -239,7 +244,7 @@ void draw(){
   //cvk.executeCommand();
   //cvk.undoCommand();
   
-  //pencil.paint();
+  pencil.paint();
   //pencil.eraser();
   
   //rect.paintNumerically(600,500,100,300);

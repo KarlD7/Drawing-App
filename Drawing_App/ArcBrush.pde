@@ -16,7 +16,7 @@ class ArcBrush extends ShapeBrush{
     if(start && !curve){
       if(mousePressed){
         cleared = false;
-        coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("undoCanvas");
         startX = mouseX;
         startY = mouseY;
@@ -34,7 +34,7 @@ class ArcBrush extends ShapeBrush{
       tempLine = new Shape(startX, startY, endX, endY, "line");
       shapes.addShape(tempLine);
       //line(startX, startY, endX, endY);
-      coords.cleanDisplay();
+      //coords.cleanDisplay();
       saveFrame("drawnCanvas");
       curve = true;
       start = true;
@@ -83,7 +83,7 @@ class ArcBrush extends ShapeBrush{
         curve(cp1X, cp1Y, startX, startY, endX, endY, cp2X, cp2Y);
         Shape a = new Shape(startX, startY, endX, endY, cp1X, cp1Y, cp2X, cp2Y, "arc");
         shapes.addShape(a);
-        coords.cleanDisplay();
+        //coords.cleanDisplay();
         saveFrame("drawnCanvas");
         start = true;
         lastAction = "draw";

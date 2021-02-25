@@ -270,7 +270,7 @@ class Shape{
         else if(angle == 0) curve(cp1X, cp1Y, x, y, endX, endY, cp2X, cp2Y);
       }
       else if(type.equals("image")){
-        redrawImage();
+        //redrawImage();
       }
         /*if(angle != 0){
           translate(x,y);
