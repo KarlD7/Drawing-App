@@ -57,7 +57,6 @@ class TriangleBrush extends ShapeBrush{
         else{
           cy = startY - (ht/2);
         }
-        println(cx, cy);
         Shape t;
         if(endY > startY){
           t = new Shape(cx, cy, wd, ht, "triangle", false);

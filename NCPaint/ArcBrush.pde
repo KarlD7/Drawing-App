@@ -75,11 +75,15 @@ class ArcBrush extends ShapeBrush{
         }
       }
       if(!start && !mousePressed){
+        float currWeight = g.strokeWeight;
+        float tempWeight = currWeight + 7;
         curve = false;
         int tempStroke = g.strokeColor;
         stroke(255);
+        strokeWeight(tempWeight);
         line(startX, startY, endX, endY);
         stroke(tempStroke);
+        strokeWeight(currWeight);
         curve(cp1X, cp1Y, startX, startY, endX, endY, cp2X, cp2Y);
         Shape a = new Shape(startX, startY, endX, endY, cp1X, cp1Y, cp2X, cp2Y, "arc");
         shapes.addShape(a);

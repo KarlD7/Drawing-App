@@ -73,6 +73,8 @@ int numY;
 int numW;
 int numH;
 
+String[] help;
+
 Boolean saved;
 Boolean loaded;
 Boolean undone;
@@ -94,7 +96,7 @@ void folderSelected(File selection){
    }
    else{
      println("Selected: " + selection.getAbsolutePath());
-     drawnCanvas.save(selection.getAbsolutePath() + ".png");
+     drawnCanvas.save(selection.getAbsolutePath());
    }
 }
 
@@ -165,6 +167,7 @@ void setup(){
  textSetter = new TextSetter();
  textSet = "";
  undone = false;
+ help = loadStrings("tst.txt");
  
  PImage logo = loadImage("NCPaintLogo.png");
  PImage rectImg = loadImage("rec.png");
@@ -211,12 +214,13 @@ void draw(){
     loading = false;
   }
   
-  println(helpButton);
-  //coords.display();
-  
   if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
   if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
   if(helpButton == 1.0){
+    if(isAdult == 1.0){
+        launch(dataPath("")+"/AdvancedManual.pdf");
+        helpButton = 0.0;
+    }
     if(isAdult != 1.0){
      if(!kidsHelp.isPlaying()){
        kidsHelp.play();

@@ -229,7 +229,6 @@ public class ControlFrame extends PApplet {
   cp5.addSlider("Brush Size")
   .setFont(font)
   .setSize(180,20)
-  .setRange(1,70)
   .setPosition(220,300)
   .setVisible(adult)
   .plugTo(parent,"stk");
