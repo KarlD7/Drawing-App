@@ -114,25 +114,23 @@ public void setInt(char n,int num){
 void keyPressed(){
  if(key == CODED){
    if(keyCode == UP){
-     transformation.translateShape(activeGroup.size(),0,-20);
+     transformation.translateShape(shapes.getSize()-1,0,-20);
    }
    if(keyCode == DOWN){
-     transformation.translateShape(activeGroup.size(),0,20);
+     transformation.translateShape(shapes.getSize()-1,0,20);
    }
    if(keyCode == LEFT){
-     transformation.translateShape(activeGroup.size(),-20,0);
+     transformation.translateShape(shapes.getSize()-1,-20,0);
    }
    if(keyCode == RIGHT){
-     transformation.translateShape(activeGroup.size(),20,0);
+     transformation.translateShape(shapes.getSize()-1,20,0);
    }
  }
  if(key == '+' || key == '='){
-     transformation.resizeShape(activeGroup.size(),10,10);
-     println("plus");
+     transformation.resizeShape(shapes.getSize()-1,10,10);
    }
    if(key == '-'){
-     println("minus");
-     transformation.resizeShape(activeGroup.size(),-10,-10);
+     transformation.resizeShape(shapes.getSize()-1,-10,-10);
    }
 }
 
