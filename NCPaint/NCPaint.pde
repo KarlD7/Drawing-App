@@ -126,6 +126,14 @@ void keyPressed(){
      transformation.translateShape(activeGroup.size(),20,0);
    }
  }
+ if(key == '+' || key == '='){
+     transformation.resizeShape(activeGroup.size(),10,10);
+     println("plus");
+   }
+   if(key == '-'){
+     println("minus");
+     transformation.resizeShape(activeGroup.size(),-10,-10);
+   }
 }
 
 void settings(){
