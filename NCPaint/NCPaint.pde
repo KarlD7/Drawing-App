@@ -218,13 +218,7 @@ void draw(){
   if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
   if(helpButton == 1.0){
     if(isAdult == 1.0){
-      for (int i = 0 ; i < help.length; i++) {
-         //println(help[i]);
-         launch("AdvancedManual.pdf");
-         //fill(0,0,0);
-      //   text(i,0,5*i);
-     //    fill(255,255,255);
-        }
+        launch(dataPath("")+"/AdvancedManual.pdf");
         helpButton = 0.0;
     }
     if(isAdult != 1.0){
