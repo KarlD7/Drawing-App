@@ -177,7 +177,7 @@ class Shape{
       int tempFill = g.fillColor;
       stroke(255);
       fill(255);
-      strokeWeight(tempStroke + 7);
+      strokeWeight(100);
       if(type.equals("rectangle")){
         rect(x-wd/2,y-ht/2,wd,ht);
       }

@@ -141,8 +141,8 @@ void keyPressed(){
      //transformation.changeColor(shapes.getSize()-1, newColor);
      //transformation.changeFillColor(shapes.getSize()-1, newColor);
      //transformation.clearFill(shapes.getSize()-1);
-     //transformation.translateShape(shapes.getSize()-1, 50, 100);
-     transformation.rotateShape(shapes.getSize()-1, 45);
+     transformation.translateShape(shapes.getSize()-1, 50, 100);
+     //transformation.rotateShape(shapes.getSize()-1, 45);
      
      //Shapes
      //transformation.resizeShape(shapes.getSize()-1,200,200);
@@ -213,11 +213,11 @@ void draw(){
     stroke(tempCol);
   }
   
-  arc.paint();
+  //arc.paint();
   //triangle.paint();
   
   //DEMO - Color
-  //rect.paint();
+  rect.paint();
   //text.paint();
   //line.paint();
   

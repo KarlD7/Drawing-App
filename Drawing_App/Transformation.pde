@@ -107,6 +107,7 @@ class Transformation{
     if(i < shapes.getSize() && i >= 0){
       Shape temp = shapes.getShape(i);
       if(temp != null){
+        temp.eraseShape();
           if(temp.type.equals("line")){
             temp.x += xPix;
             temp.y += yPix;
