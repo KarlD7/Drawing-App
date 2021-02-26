@@ -73,6 +73,8 @@ int numY;
 int numW;
 int numH;
 
+String[] help;
+
 Boolean saved;
 Boolean loaded;
 Boolean undone;
@@ -165,6 +167,7 @@ void setup(){
  textSetter = new TextSetter();
  textSet = "";
  undone = false;
+ help = loadStrings("tst.txt");
  
  PImage logo = loadImage("NCPaintLogo.png");
  PImage rectImg = loadImage("rec.png");
@@ -192,6 +195,7 @@ void draw(){
     stroke(255,255,255);
     rect(0,680,100,20);
     fill(0,0,0);
+    textSize(13);
     text("X: "+mouseX+"  Y: "+mouseY,0,680);
     fill(255,255,255);
   }
@@ -210,12 +214,19 @@ void draw(){
     loading = false;
   }
   
-  println(helpButton);
-  //coords.display();
-  
   if(rot == 0.1) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), -90);
   if(rot == 0.2) transformation.rotateShape(shapes.getShapeIndex(shapes.last()), 90);
   if(helpButton == 1.0){
+    if(isAdult == 1.0){
+      for (int i = 0 ; i < help.length; i++) {
+         //println(help[i]);
+         launch("AdvancedManual.pdf");
+         //fill(0,0,0);
+      //   text(i,0,5*i);
+     //    fill(255,255,255);
+        }
+        helpButton = 0.0;
+    }
     if(isAdult != 1.0){
      if(!kidsHelp.isPlaying()){
        kidsHelp.play();
